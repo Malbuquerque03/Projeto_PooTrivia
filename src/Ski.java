@@ -10,7 +10,7 @@ public class Ski extends Desporto{
         setMajoracaoS();
         this.respostaCerta = respostaCerta;
     }
-
+jehgkjrdhnlkerjgekjr
 
     //Setters
 
