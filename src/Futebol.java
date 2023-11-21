@@ -8,7 +8,7 @@ public class Futebol extends Desporto{
 
     public Futebol(String pergunta, boolean dificuldade, ArrayList respostasFacil, ArrayList respostasDificil, String respostaCerta) {
         super(pergunta, dificuldade);
-       setMajoracaoF();
+        setMajoracaoF();
         this.respostasFacil = respostasFacil;
         this.respostasDificil = respostasDificil;
         this.respostaCerta = respostaCerta;

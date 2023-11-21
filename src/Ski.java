@@ -12,6 +12,7 @@ public class Ski extends Desporto{
     }
 
 
+
     //Setters
 
     public void setMajoracaoS() {
