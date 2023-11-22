@@ -28,31 +28,12 @@ public class PooTrivia {
 
 
         if(separado[0][0].equalsIgnoreCase("ciencias")){
-            String[] rsp =new String[separado[1].length];
-            String[][] resposta ;
-            for(int j=0;j< separado.length;j++) {
-                for (int i = 1; i < separado[j].length; i++) {
-                    rsp[i - 1] = separado[j][i];
-                   // resposta[0]
+
                 }
-            }
 
-
-          /*  for(int i=0; i < rsp.length;i++){
-                resposta[i][]
-            }
-          // respostas.add(new Ciencia(separado[1][1],false,));
-
-           */
-            for( Object r: rsp){
-                System.out.println(r);
-            }
         }
 
-        for( Object r: respostas){
-            System.out.println(r);
-        }
-    }
+
     private static String[] separaRespostas(String td, String a){     //metodo de separacao
         String[] respostas= td.split(a);
         return respostas;
@@ -66,5 +47,17 @@ public class PooTrivia {
         return separadinho;
     }
 
+    private static void printtabela(String[][] a){       // metodo para ajuda de debug
+        for(int i =0; i<a.length;i++){
+            for(int j =0; j<a[i].length;j++) {
+                System.out.println("[" + i + "] ["+j+"] " + a[i][j]);
+            }
+        }
+    }
 
+    private static void printarray(String[] a){        // metodo para ajuda de debug
+        for(int i =0; i<a.length;i++){
+            System.out.println("["+i+"] "+a[i]);
+        }
+    }
 }
