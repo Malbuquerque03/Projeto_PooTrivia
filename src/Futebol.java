@@ -4,6 +4,7 @@ public class Futebol extends Desporto{
     protected int majoracaoF;
     protected ArrayList respostasFacil;
     protected ArrayList respostasDificil;
+    protected ArrayList respostas;
     protected String respostaCerta;
 
     public Futebol(String pergunta, boolean dificuldade, ArrayList respostasFacil, ArrayList respostasDificil, String respostaCerta) {
@@ -49,4 +50,5 @@ public class Futebol extends Desporto{
     public String getRespostaCerta() {
         return respostaCerta;
     }
+
 }

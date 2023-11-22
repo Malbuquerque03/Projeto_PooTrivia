@@ -5,9 +5,36 @@ public class GereFicheiro {
     protected ArrayList<Pergunta> perguntas = new ArrayList<>();
     protected ArrayList respostas;
 
+    public void readTextFile(File f) {
+
+        if (f.exists() && f.isFile()) {
+            try {
+                FileReader fr = new FileReader(f);
+                BufferedReader br = new BufferedReader(fr);
+                String line;
+                String[] linha;
+                String[][] separado;
+                int n=0;
+                while ((line = br.readLine()) != null) {
+                    linha = separaRespostas(line,";");
+                    separado=separa2Respostas(linha,"/");
+                    for(int i=1;i<separado.length;i++){
+                        perguntas.add(new Pergunta(separado[i][0], false));
+                    }
+                }
+                br.close();
+            } catch (FileNotFoundException ex) {
+                System.out.println("Erro a abrir ficheiro de texto.");
+            } catch (IOException ex) {
+                System.out.println("Erro a ler ficheiro de texto.");
+            }
+        } else {
+            System.out.println("Ficheiro não existe.");
+        }
+    }
 
 
-    public void writeFicheiroObjetos(Jogador j) {
+        public void writeFicheiroObjetos(Jogador j) {
         String pathNome= "pootrivia_jogo_";
         String[] date = j.data.split("-|:| ");
         for(int i =0; i< date.length;i++){
@@ -50,6 +77,19 @@ public class GereFicheiro {
         }
     }
 
+
+    private static String[] separaRespostas(String td, String a){     //metodo de separacao
+        String[] respostas= td.split(a);
+        return respostas;
+    }
+    private static String[][] separa2Respostas(String[] respostas, String a){     //metodo de separacao
+        String[][] separadinho = new String[respostas.length][];
+        for (int i = 0; i < respostas.length; i++) {
+
+            separadinho[i] = respostas[i].split(a);
+        }
+        return separadinho;
+    }
 }
 
 
