@@ -2,12 +2,12 @@ import java.util.ArrayList;
 
 public class Ski extends Desporto{
     protected int majoracaoS;
+    protected ArrayList respostas;
+    protected String respostaCerta;
 
-    protected boolean respostaCerta;
 
-
-    public Ski(String pergunta, boolean dificuldade, boolean respostaCerta) {
-        super(pergunta, dificuldade);
+    public Ski(String pergunta, ArrayList respostas, String respostaCerta) {
+        super(pergunta);
         setMajoracaoS();
         this.respostaCerta = respostaCerta;
     }
@@ -19,8 +19,11 @@ public class Ski extends Desporto{
     public void setMajoracaoS() {
         this.majoracaoS = 2;
     }
+    public void setRespostas(ArrayList respostas) {
+        this.respostas = respostas;
+    }
 
-    public void setRespostaCerta(boolean respostaCerta) {
+    public void setRespostaCerta(String respostaCerta) {
         this.respostaCerta = respostaCerta;
     }
 
@@ -31,8 +34,9 @@ public class Ski extends Desporto{
     public int getMajoracaoS() {
         return majoracaoS;
     }
-
-    public boolean isRespostaCerta() {
-        return respostaCerta;
+    public ArrayList getRespostas() {
+        return respostas;
     }
+
+    public String getespostaCerta() {return respostaCerta; }
 }

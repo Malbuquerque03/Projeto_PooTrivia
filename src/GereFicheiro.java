@@ -2,10 +2,9 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class GereFicheiro {
-    protected ArrayList<Pergunta> perguntas = new ArrayList<>();
-    protected ArrayList respostas;
+   // protected ArrayList respostas;
+    public void readTextFile(File f,ArrayList<Pergunta> perguntas, ArrayList respostas) {
 
-    public void readTextFile(File f) {
 
         if (f.exists() && f.isFile()) {
             try {
@@ -19,7 +18,45 @@ public class GereFicheiro {
                     linha = separaRespostas(line,";");
                     separado=separa2Respostas(linha,"/");
                     for(int i=1;i<separado.length;i++){
-                        perguntas.add(new Pergunta(separado[i][0], false));
+                        perguntas.add(new Pergunta(separado[i][0]));
+                    }
+                    if(separado[0][0].equalsIgnoreCase("ciencias")){
+                        for(int j=1; j< separado.length;j++) {
+                            perguntas.add(new Ciencia(separado[j][0],separaEstranho(separado,j,false),separaEstranho(separado,j,true),separado[j][1]));
+                        }
+
+                    }
+
+                    if(separado[0][0].equalsIgnoreCase("artes")){
+
+                        for(int j=1; j< separado.length;j++) {
+                            perguntas.add(new Artes(separado[j][0],addArray(respostas,separado),separado[j][1]));
+
+                        }
+                        removeArray(respostas);
+                        
+                        
+                    }
+
+                    if(separado[0][0].equalsIgnoreCase("ski")){
+                        for(int j=1; j< separado.length;j++) {
+                            perguntas.add( new Ski(separado[j][0],addArray(respostas,separado),separado[j][1]));
+                        }
+                        removeArray(respostas);
+
+                    }
+                    
+                    if(separado[0][0].equalsIgnoreCase("natacao")){
+                        for(int j=1; j< separado.length;j++) {
+                            perguntas.add( new Natacao(separado[j][0],addArray(respostas,separado),separado[j][1]));
+                        }
+                        removeArray(respostas);
+                    }
+
+                    if(separado[0][0].equalsIgnoreCase("futebol")){
+                        for(int j=1; j< separado.length;j++) {
+                            perguntas.add(new Futebol(separado[j][0],separaEstranho(separado,j,false),separaEstranho(separado,j,true),separado[j][1]));
+                        }
                     }
                 }
                 br.close();
@@ -31,6 +68,7 @@ public class GereFicheiro {
         } else {
             System.out.println("Ficheiro não existe.");
         }
+
     }
 
 
@@ -78,17 +116,66 @@ public class GereFicheiro {
     }
 
 
-    private static String[] separaRespostas(String td, String a){     //metodo de separacao
+    private String[] separaRespostas(String td, String a){     //metodo de separacao
         String[] respostas= td.split(a);
         return respostas;
     }
-    private static String[][] separa2Respostas(String[] respostas, String a){     //metodo de separacao
+    private String[][] separa2Respostas(String[] respostas, String a){     //metodo de separacao
         String[][] separadinho = new String[respostas.length][];
         for (int i = 0; i < respostas.length; i++) {
 
             separadinho[i] = respostas[i].split(a);
         }
         return separadinho;
+    }
+    private ArrayList addArray(ArrayList a,String[][] aSeparar){
+        for(int j=1; j< aSeparar.length;j++) {
+            for (int i = 0; i < aSeparar[j].length - 1; i++) {
+                a.add(aSeparar[j][i + 1]);
+            }
+        }
+        return a;
+    }
+
+    private ArrayList removeArray(ArrayList a){
+        a.clear();
+        return a;
+    }
+
+    private ArrayList separaEstranho(String[][] separado,int j, boolean complicado){
+
+        String[] respostas= new String[separado[j].length-1];
+
+        for(int i=0;i<separado[j].length-1;i++){
+            respostas[i]=separado[j][i+1];
+        }
+
+        String[][] facilDificil = separa2Respostas(respostas,"&");
+        if(complicado){
+           return buedaDificil(facilDificil);
+        }
+        else{
+         return buedaFacil(facilDificil);
+        }
+
+    }
+    private ArrayList buedaFacil(String[][] mixed){
+
+        ArrayList facis=new ArrayList();
+        for(int i=0;i<mixed.length;i++){
+            facis.add(mixed[i][0]);
+        }
+
+        return facis;
+    }
+
+    private ArrayList buedaDificil(String[][] mixed){
+
+        ArrayList dificis=new ArrayList();
+        for(int i=0;i<mixed.length;i++){
+            dificis.add(mixed[i][1]);
+        }
+        return dificis;
     }
 }
 

@@ -3,12 +3,10 @@ import java.util.ArrayList;
 public class Pergunta {
     protected int valorBase;
     protected String pergunta;
-    protected boolean dificuldade;
 
-    public Pergunta(String pergunta, boolean dificuldade) {
+    public Pergunta(String pergunta) {
         setValorBase();
         this.pergunta = pergunta;
-        this.dificuldade = dificuldade;
     }
 
 
@@ -21,9 +19,6 @@ public class Pergunta {
         this.pergunta = pergunta;
     }
 
-    public void setDificuldade(boolean dificuldade) {
-        this.dificuldade = dificuldade;
-    }
 
 
 
@@ -36,7 +31,4 @@ public class Pergunta {
         return pergunta;
     }
 
-    public boolean isDificuldade() {
-        return dificuldade;
-    }
 }

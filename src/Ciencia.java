@@ -7,8 +7,8 @@ public class Ciencia extends Pergunta{
     protected String respostaCerta;
 
 
-    public Ciencia(String pergunta, boolean dificuldade, ArrayList respostasFacil, ArrayList respostasDificil, String respostaCerta) {
-        super(pergunta, dificuldade);
+    public Ciencia(String pergunta, ArrayList respostasFacil, ArrayList respostasDificil, String respostaCerta) {
+        super(pergunta);
         setMajoracaoC();
         this.respostasFacil = respostasFacil;
         this.respostasDificil = respostasDificil;

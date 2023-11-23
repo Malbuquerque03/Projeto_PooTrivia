@@ -1,8 +1,8 @@
 public class Desporto extends Pergunta {
     protected int majoracaoD;
 
-    public Desporto(String pergunta, boolean dificuldade) {
-        super(pergunta, dificuldade);
+    public Desporto(String pergunta) {
+        super(pergunta);
         setMajoracaoD();
     }
 

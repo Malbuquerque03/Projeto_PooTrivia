@@ -6,16 +6,16 @@ public class Artes extends Pergunta {
     protected String respostaCerta;
 
 
-    public Artes( String pergunta, boolean dificuldade, int majoracaoA, ArrayList respostas, String respostaCerta) {
-        super( pergunta, dificuldade);
-        this.majoracaoA = majoracaoA;
+    public Artes( String pergunta, ArrayList respostas, String respostaCerta) {
+        super( pergunta);
+        setMajoracaoA();
         this.respostas = respostas;
         this.respostaCerta = respostaCerta;
     }
 
 
     //Setters
-    public void setMajoracaoA(int majoracaoA) {
+    public void setMajoracaoA() {
         this.majoracaoA = 10;
     }
 
@@ -41,4 +41,5 @@ public class Artes extends Pergunta {
     public String getRespostaCerta() {
         return respostaCerta;
     }
+
 }
