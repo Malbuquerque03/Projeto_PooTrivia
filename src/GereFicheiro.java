@@ -31,11 +31,8 @@ public class GereFicheiro {
 
                         for(int j=1; j< separado.length;j++) {
                             perguntas.add(new Artes(separado[j][0],addArray(respostas,separado),separado[j][1]));
-
                         }
                         removeArray(respostas);
-                        
-                        
                     }
 
                     if(separado[0][0].equalsIgnoreCase("ski")){
@@ -73,18 +70,8 @@ public class GereFicheiro {
 
 
         public void writeFicheiroObjetos(Jogador j) {
-        String pathNome= "pootrivia_jogo_";
-        String[] date = j.data.split("-|:| ");
-        for(int i =0; i< date.length;i++){
-            pathNome+= date[i];
-        }
-        date = j.nome.split(" ");
-        pathNome += "_"+ date[0].charAt(0);
-        for(int i=1; i< date.length;i++){
-            pathNome+=date[i].charAt(0);
-        }
-        pathNome+= ".dat";
-        File f = new File(pathNome);
+        File f = new File(nomeFileObj(j));
+
         try {
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -95,6 +82,7 @@ public class GereFicheiro {
         } catch (IOException ex) {
             System.out.println("Erro a escrever para o ficheiro.");
         }
+
     }
 
 
@@ -171,15 +159,43 @@ public class GereFicheiro {
     }
 
     private ArrayList buedaDificil(String[][] mixed){
-
         ArrayList dificis=new ArrayList();
         for(int i=0;i<mixed.length;i++){
-            dificis.add(mixed[i][1]);
+            dificis.add(mixed[i][mixed[i].length-1]);
         }
         return dificis;
     }
 
 
+    private String nomeFileObj(Jogador j){
+        String pathNome= "pootrivia_jogo_";
+        String[] date = j.data.split("-|:| ");
+        for(int i =0; i< date.length;i++){
+            pathNome+= date[i];
+        }
+        date = j.nome.split(" ");
+        pathNome += "_"+ date[0].charAt(0);
+        for(int i=1; i< date.length;i++){
+            pathNome+=date[i].charAt(0);
+        }
+        pathNome+= ".dat";
+
+        return pathNome;
+    }
+
+    private static void printarray(String[] a){        // metodo para ajuda de debug
+        for(int i =0; i<a.length;i++){
+            System.out.println("["+i+"] "+a[i]);
+        }
+    }
+
+    private static void printtabela(String[][] a){       // metodo para ajuda de debug
+        for(int i =0; i<a.length;i++){
+            for(int j =0; j<a[i].length;j++) {
+                System.out.println("[" + i + "] ["+j+"] " + a[i][j]);
+            }
+        }
+    }
 }
 
 

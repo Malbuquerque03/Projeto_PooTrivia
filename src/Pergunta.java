@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Pergunta {
     protected int valorBase;
     protected String pergunta;
@@ -36,6 +34,15 @@ public class Pergunta {
 
     public String getPergunta() {
         return pergunta;
+    }
+
+
+
+    //Metodos
+
+    public String resultadoQuestao(String respostas){return "Resultado";}
+    public int respostaAte3(){
+        return 2;
     }
 
 }
