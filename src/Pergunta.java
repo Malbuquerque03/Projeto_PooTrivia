@@ -4,11 +4,18 @@ public class Pergunta {
     protected int valorBase;
     protected String pergunta;
 
+    protected int majoracao;
+
     public Pergunta(String pergunta) {
         setValorBase();
         this.pergunta = pergunta;
     }
 
+    public Pergunta( String pergunta, int majoracao) {
+        setValorBase();
+        this.pergunta = pergunta;
+        this.majoracao = majoracao;
+    }
 
     //Setters
     public void setValorBase() {

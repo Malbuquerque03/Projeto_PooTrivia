@@ -1,24 +1,18 @@
 import java.util.ArrayList;
 
 public class Natacao extends Desporto{
-    protected int majoracaoN;
     protected ArrayList respostas;
     protected String respostaCerta;
 
 
     public Natacao(String pergunta, ArrayList respostas,String respostaCerta) {
-        super(pergunta);
-       setMajoracaoN();
+        super(pergunta,10);
        this.respostas=respostas;
         this.respostaCerta = respostaCerta;
     }
 
 
     //Setters
-
-    public void setMajoracaoN() {
-        this.majoracaoN = 10;
-    }
 
     public void setRespostaCerta(String respostaCerta) {
         this.respostaCerta = respostaCerta;

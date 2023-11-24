@@ -1,20 +1,17 @@
 public class Desporto extends Pergunta {
-    protected int majoracaoD;
+    protected int majoracao;
 
-    public Desporto(String pergunta) {
-        super(pergunta);
-        setMajoracaoD();
+    public Desporto(String pergunta,int majoracao) {
+        super(pergunta,3);
+        this.majoracao=majoracao;
     }
 
     //Setter
-    public void setMajoracaoD() {
-        this.majoracaoD = 3;
-    }
+    public void setMajoracao(int majoracao) { this.majoracao = majoracao; }
+
 
     //Getter
-
-
-    public int getMajoracaoD() {
-        return majoracaoD;
+    public int getMajoracao() {
+        return majoracao;
     }
 }

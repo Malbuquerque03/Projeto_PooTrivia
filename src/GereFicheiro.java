@@ -99,6 +99,7 @@ public class GereFicheiro {
 
 
 
+
     public void readFicheiroObjetos(Jogador e, File fo) {
 
         try {
@@ -177,6 +178,8 @@ public class GereFicheiro {
         }
         return dificis;
     }
+
+
 }
 
 

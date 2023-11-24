@@ -1,15 +1,12 @@
 import java.util.ArrayList;
 
 public class Futebol extends Desporto{
-    protected int majoracaoF;
     protected ArrayList respostasFacil;
     protected ArrayList respostasDificil;
-    protected ArrayList respostas;
     protected String respostaCerta;
 
     public Futebol(String pergunta,  ArrayList respostasFacil, ArrayList respostasDificil, String respostaCerta) {
-        super(pergunta);
-        setMajoracaoF();
+        super(pergunta,1);
         this.respostasFacil = respostasFacil;
         this.respostasDificil = respostasDificil;
         this.respostaCerta = respostaCerta;
@@ -19,10 +16,6 @@ public class Futebol extends Desporto{
 
 
     //Setters
-    public void setMajoracaoF() {
-        this.majoracaoF = 1;
-    }
-
     public void setRespostasFacil(ArrayList respostasFacil) {
         this.respostasFacil = respostasFacil;
     }
@@ -36,10 +29,6 @@ public class Futebol extends Desporto{
     }
 
     //Getters
-
-    public int getMajoracaoF() {
-        return majoracaoF;
-    }
 
     public ArrayList getRespostasFacil() {
         return respostasFacil;
