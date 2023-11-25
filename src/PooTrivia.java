@@ -16,6 +16,9 @@ public class PooTrivia {
         GereFicheiro fich = new GereFicheiro();
         fich.readTextFile(new File("perguntas_poo.csv"), perguntas, respostas);
 
+        for(Pergunta p: perguntas){
+            System.out.println(p.getPergunta());
+        }
 
         System.out.println("---------------");
 

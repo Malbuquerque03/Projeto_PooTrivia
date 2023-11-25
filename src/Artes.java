@@ -43,6 +43,7 @@ public class Artes extends Pergunta {
 
     @Override
     public int respostaAte3(){
+        System.out.println("N DISTO     -->"+respostas.size());
         Collections.shuffle(respostas);
         Scanner sc = new Scanner(System.in);
         System.out.println("É DEPOIS DISTO     -->"+respostas.size());

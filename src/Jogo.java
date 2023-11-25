@@ -46,7 +46,7 @@ public class Jogo {
                     resultadoELugar= perguntas.get(index) + String.valueOf(jogada);
                     respostasCertas.add(resultadoELugar);
                 }
-               else if(resultado==2){
+               else if(resultado==0){
                     resultadoELugar= perguntas.get(index) + String.valueOf(jogada);
                     respostasErradas.add(resultadoELugar);
                 }

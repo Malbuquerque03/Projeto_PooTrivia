@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class GereFicheiro {
-   // protected ArrayList respostas;
+    // protected ArrayList respostas;
     public void readTextFile(File f,ArrayList<Pergunta> perguntas, ArrayList respostas) {
 
 
@@ -17,12 +17,12 @@ public class GereFicheiro {
                 while ((line = br.readLine()) != null) {
                     linha = separaRespostas(line,";");
                     separado=separa2Respostas(linha,"/");
-                    for(int i=1;i<separado.length;i++){
-                        perguntas.add(new Pergunta(separado[i][0]));
-                    }
+
+
                     if(separado[0][0].equalsIgnoreCase("ciencias")){
                         for(int j=1; j< separado.length;j++) {
-                            perguntas.add(new Ciencia(separado[j][0],separaEstranho(separado,j,false),separaEstranho(separado,j,true),separado[j][1]));
+                            String[][] facildificil = separaEstranho(separado,j);
+                            perguntas.add(new Ciencia(separado[j][0],buedaFacil(facildificil),buedaDificil(facildificil),facildificil[0][0]));
                         }
 
                     }
@@ -42,7 +42,7 @@ public class GereFicheiro {
                         removeArray(respostas);
 
                     }
-                    
+
                     if(separado[0][0].equalsIgnoreCase("natacao")){
                         for(int j=1; j< separado.length;j++) {
                             perguntas.add( new Natacao(separado[j][0],addArray(respostas,separado),separado[j][1]));
@@ -52,9 +52,12 @@ public class GereFicheiro {
 
                     if(separado[0][0].equalsIgnoreCase("futebol")){
                         for(int j=1; j< separado.length;j++) {
-                            perguntas.add(new Futebol(separado[j][0],separaEstranho(separado,j,false),separaEstranho(separado,j,true),separado[j][1]));
+                            String[][] facildificil = separaEstranho(separado,j);
+                            perguntas.add(new Futebol(separado[j][0],buedaFacil(facildificil),buedaDificil(facildificil),facildificil[0][0]));
+
                         }
                     }
+
                 }
                 br.close();
             } catch (FileNotFoundException ex) {
@@ -69,7 +72,7 @@ public class GereFicheiro {
     }
 
 
-        public void writeFicheiroObjetos(Jogador j) {
+    public void writeFicheiroObjetos(Jogador j) {
         File f = new File(nomeFileObj(j));
 
         try {
@@ -131,7 +134,7 @@ public class GereFicheiro {
         return a;
     }
 
-    private ArrayList separaEstranho(String[][] separado,int j, boolean complicado){
+    private String[][] separaEstranho(String[][] separado,int j){
 
         String[] respostas= new String[separado[j].length-1];
 
@@ -140,13 +143,7 @@ public class GereFicheiro {
         }
 
         String[][] facilDificil = separa2Respostas(respostas,"&");
-        if(complicado){
-           return buedaDificil(facilDificil);
-        }
-        else{
-         return buedaFacil(facilDificil);
-        }
-
+        return facilDificil;
     }
     private ArrayList buedaFacil(String[][] mixed){
 
@@ -154,7 +151,6 @@ public class GereFicheiro {
         for(int i=0;i<mixed.length;i++){
             facis.add(mixed[i][0]);
         }
-
         return facis;
     }
 
@@ -197,7 +193,6 @@ public class GereFicheiro {
         }
     }
 }
-
 
 
 
