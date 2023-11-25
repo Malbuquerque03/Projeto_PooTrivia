@@ -28,19 +28,19 @@ public class Jogo {
 
 
     public void lig(ArrayList<Pergunta> perguntas){
-        int jogada=0;
+        int jogada=1;
         ArrayList respostasCertas =new ArrayList<>() ;
         ArrayList respostasErradas =new ArrayList<>() ;
         String resultadoELugar;
         int resultado =0;
         Scanner sc = new Scanner(System.in);
 
-        while(jogada<5){
+        while(jogada<=5){
             int index = (int)(Math.random() * perguntas.size());
             System.out.println("\t\t\tPERGUNTA "+jogada +":\n"+ perguntas.get(index).pergunta);
 
             System.out.println("\t\t\tOPÇÕES:");
-            if(jogada<3){
+            if(jogada<=3){
                resultado= perguntas.get(index).respostaAte3();
                 if(resultado==1){
                     resultadoELugar= perguntas.get(index) + String.valueOf(jogada);

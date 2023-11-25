@@ -10,7 +10,7 @@ public class PooTrivia {
     public PooTrivia(){
 
          ArrayList<Pergunta> perguntas = new ArrayList<>();
-         ArrayList respostas =new ArrayList<>() ;
+        ArrayList<String> respostas = new ArrayList<>();
 
         System.out.println("---------------");
         GereFicheiro fich = new GereFicheiro();

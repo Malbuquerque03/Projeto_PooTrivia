@@ -31,23 +31,25 @@ public class GereFicheiro {
 
                         for(int j=1; j< separado.length;j++) {
                             perguntas.add(new Artes(separado[j][0],addArray(respostas,separado),separado[j][1]));
+                            removeArray(respostas);
                         }
-                        removeArray(respostas);
+
                     }
 
                     if(separado[0][0].equalsIgnoreCase("ski")){
                         for(int j=1; j< separado.length;j++) {
                             perguntas.add( new Ski(separado[j][0],addArray(respostas,separado),separado[j][1]));
+                            removeArray(respostas);
                         }
-                        removeArray(respostas);
 
                     }
 
                     if(separado[0][0].equalsIgnoreCase("natacao")){
                         for(int j=1; j< separado.length;j++) {
                             perguntas.add( new Natacao(separado[j][0],addArray(respostas,separado),separado[j][1]));
+                            removeArray(respostas);
                         }
-                        removeArray(respostas);
+
                     }
 
                     if(separado[0][0].equalsIgnoreCase("futebol")){
@@ -122,8 +124,8 @@ public class GereFicheiro {
     }
     private ArrayList addArray(ArrayList a,String[][] aSeparar){
         for(int j=1; j< aSeparar.length;j++) {
-            for (int i = 0; i < aSeparar[j].length - 1; i++) {
-                a.add(aSeparar[j][i + 1]);
+            for (int i = 1; i < aSeparar[j].length; i++) {
+                a.add(aSeparar[j][i]);
             }
         }
         return a;
