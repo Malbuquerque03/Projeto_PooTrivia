@@ -30,7 +30,12 @@ public class GereFicheiro {
                     if(separado[0][0].equalsIgnoreCase("artes")){
 
                         for(int j=1; j< separado.length;j++) {
-                            perguntas.add(new Artes(separado[j][0],addArray(respostas,separado),separado[j][1]));
+                            perguntas.add(new Artes(separado[j][0],addArray(respostas,separado,j),separado[j][1]));
+
+                            for(Object a : respostas){
+                                System.out.println(a);
+                            }
+                            System.out.println("grgfbgfhg");
                             removeArray(respostas);
                         }
 
@@ -38,15 +43,16 @@ public class GereFicheiro {
 
                     if(separado[0][0].equalsIgnoreCase("ski")){
                         for(int j=1; j< separado.length;j++) {
-                            perguntas.add( new Ski(separado[j][0],addArray(respostas,separado),separado[j][1]));
+                            perguntas.add( new Ski(separado[j][0],addArray(respostas,separado,j),separado[j][1]));
                             removeArray(respostas);
                         }
+
 
                     }
 
                     if(separado[0][0].equalsIgnoreCase("natacao")){
                         for(int j=1; j< separado.length;j++) {
-                            perguntas.add( new Natacao(separado[j][0],addArray(respostas,separado),separado[j][1]));
+                            perguntas.add( new Natacao(separado[j][0],addArray(respostas,separado,j),separado[j][1]));
                             removeArray(respostas);
                         }
 
@@ -122,12 +128,11 @@ public class GereFicheiro {
         }
         return separadinho;
     }
-    private ArrayList addArray(ArrayList a,String[][] aSeparar){
-        for(int j=1; j< aSeparar.length;j++) {
-            for (int i = 1; i < aSeparar[j].length; i++) {
-                a.add(aSeparar[j][i]);
+    private ArrayList addArray(ArrayList a,String[][] aSeparar,int j){
+            for (int i = 0; i < aSeparar[j].length - 1; i++) {
+                a.add(aSeparar[j][i + 1]);
             }
-        }
+
         return a;
     }
 
@@ -195,7 +200,6 @@ public class GereFicheiro {
         }
     }
 }
-
 
 
 
