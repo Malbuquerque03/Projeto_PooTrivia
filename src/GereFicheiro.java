@@ -3,8 +3,9 @@ import java.util.ArrayList;
 
 public class GereFicheiro {
     // protected ArrayList respostas;
-    public void readTextFile(File f,ArrayList<Pergunta> perguntas, ArrayList respostas) {
+//    protected File fo = new File(nomeFileObj( Jogador));
 
+    public void readTextFile(File f,ArrayList<Pergunta> perguntas, ArrayList respostas) {
 
         if (f.exists() && f.isFile()) {
             try {
@@ -13,7 +14,6 @@ public class GereFicheiro {
                 String line;
                 String[] linha;
                 String[][] separado;
-                int n=0;
                 while ((line = br.readLine()) != null) {
                     linha = separaRespostas(line,";");
                     separado=separa2Respostas(linha,"/");
@@ -30,21 +30,15 @@ public class GereFicheiro {
                     if(separado[0][0].equalsIgnoreCase("artes")){
 
                         for(int j=1; j< separado.length;j++) {
-                            perguntas.add(new Artes(separado[j][0],addArray(respostas,separado,j),separado[j][1]));
+                            perguntas.add(new Artes(separado[j][0],addArray(separado,j),separado[j][1]));
 
-                            for(Object a : respostas){
-                                System.out.println(a);
-                            }
-                            System.out.println("grgfbgfhg");
-                            removeArray(respostas);
                         }
 
                     }
 
                     if(separado[0][0].equalsIgnoreCase("ski")){
                         for(int j=1; j< separado.length;j++) {
-                            perguntas.add( new Ski(separado[j][0],addArray(respostas,separado,j),separado[j][1]));
-                            removeArray(respostas);
+                            perguntas.add( new Ski(separado[j][0],addArray(separado,j),separado[j][1]));
                         }
 
 
@@ -52,8 +46,7 @@ public class GereFicheiro {
 
                     if(separado[0][0].equalsIgnoreCase("natacao")){
                         for(int j=1; j< separado.length;j++) {
-                            perguntas.add( new Natacao(separado[j][0],addArray(respostas,separado,j),separado[j][1]));
-                            removeArray(respostas);
+                            perguntas.add( new Natacao(separado[j][0],addArray(separado,j),separado[j][1]));
                         }
 
                     }
@@ -61,7 +54,10 @@ public class GereFicheiro {
                     if(separado[0][0].equalsIgnoreCase("futebol")){
                         for(int j=1; j< separado.length;j++) {
                             String[][] facildificil = separaEstranho(separado,j);
-                            perguntas.add(new Futebol(separado[j][0],buedaFacil(facildificil),buedaDificil(facildificil),facildificil[0][0]));
+                            String[] certas = new String[2];
+                            certas[0] = facildificil[0][0];
+                            certas[1]=facildificil[0][1];
+                            perguntas.add(new Futebol(separado[j][0],buedaFacil(facildificil),buedaDificil(facildificil),certas));
 
                         }
                     }
@@ -81,9 +77,9 @@ public class GereFicheiro {
 
 
     public void writeFicheiroObjetos(Jogador j) {
-        File f = new File(nomeFileObj(j));
 
         try {
+            File f = new File(j.nomeFile);
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(j);
@@ -99,9 +95,10 @@ public class GereFicheiro {
 
 
 
-    public void readFicheiroObjetos(Jogador e, File fo) {
+    public void readFicheiroObjetos(Jogador e) {
 
         try {
+            File fo =new File(e.nomeFile);
             FileInputStream fis = new FileInputStream(fo);
             ObjectInputStream ois = new ObjectInputStream(fis);
             e = (Jogador) ois.readObject();
@@ -128,18 +125,15 @@ public class GereFicheiro {
         }
         return separadinho;
     }
-    private ArrayList addArray(ArrayList a,String[][] aSeparar,int j){
-            for (int i = 0; i < aSeparar[j].length - 1; i++) {
-                a.add(aSeparar[j][i + 1]);
-            }
+    private ArrayList addArray(String[][] aSeparar, int j){
+        ArrayList a = new ArrayList();
 
+        for (int i = 0; i < aSeparar[j].length - 1; i++) {
+            a.add(aSeparar[j][i + 1]);
+        }
         return a;
     }
 
-    private ArrayList removeArray(ArrayList a){
-        a.clear();
-        return a;
-    }
 
     private String[][] separaEstranho(String[][] separado,int j){
 
@@ -170,22 +164,6 @@ public class GereFicheiro {
     }
 
 
-    private String nomeFileObj(Jogador j){
-        String pathNome= "pootrivia_jogo_";
-        String[] date = j.data.split("-|:| ");
-        for(int i =0; i< date.length;i++){
-            pathNome+= date[i];
-        }
-        date = j.nome.split(" ");
-        pathNome += "_"+ date[0].charAt(0);
-        for(int i=1; i< date.length;i++){
-            pathNome+=date[i].charAt(0);
-        }
-        pathNome+= ".dat";
-
-        return pathNome;
-    }
-
     private static void printarray(String[] a){        // metodo para ajuda de debug
         for(int i =0; i<a.length;i++){
             System.out.println("["+i+"] "+a[i]);
@@ -199,7 +177,9 @@ public class GereFicheiro {
             }
         }
     }
+
 }
+
 
 
 

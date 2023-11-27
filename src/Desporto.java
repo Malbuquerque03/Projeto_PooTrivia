@@ -20,7 +20,8 @@ public class Desporto extends Pergunta {
     //Metodos
 
     @Override
-    public int respostaAte3(){
-        return 3;
-    }
+    public int respostaAte3(){ return 3; }
+
+    @Override
+    public int perguntaDificil(){ return 3; }
 }

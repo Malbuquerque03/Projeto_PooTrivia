@@ -40,9 +40,9 @@ public class Pergunta {
 
     //Metodos
 
-    public String resultadoQuestao(String respostas){return "Resultado";}
-    public int respostaAte3(){
-        return 2;
-    }
+    public int respostaAte3(){ return 2; }
 
+    public int perguntaDificil(){ return 2; }
+
+    public int contas(){ return 2; }
 }

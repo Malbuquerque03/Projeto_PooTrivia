@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Futebol extends Desporto{
     protected ArrayList respostasFacil;
     protected ArrayList respostasDificil;
-    protected String respostaCerta;
+    protected String[] respostaCerta;
 
-    public Futebol(String pergunta,  ArrayList respostasFacil, ArrayList respostasDificil, String respostaCerta) {
+    public Futebol(String pergunta,  ArrayList respostasFacil, ArrayList respostasDificil, String[] respostaCerta) {
         super(pergunta,1);
         this.respostasFacil = respostasFacil;
         this.respostasDificil = respostasDificil;
@@ -26,7 +26,7 @@ public class Futebol extends Desporto{
         this.respostasDificil = respostasDificil;
     }
 
-    public void setRespostaCerta(String respostaCerta) {
+    public void setRespostaCerta(String[] respostaCerta) {
         this.respostaCerta = respostaCerta;
     }
 
@@ -40,7 +40,7 @@ public class Futebol extends Desporto{
         return respostasDificil;
     }
 
-    public String getRespostaCerta() {
+    public String[] getRespostaCerta() {
         return respostaCerta;
     }
 
@@ -52,19 +52,63 @@ public class Futebol extends Desporto{
         Collections.shuffle(respostasFacil);
         Scanner sc = new Scanner(System.in);
         for(int i=0;i< respostasFacil.size();i++){
-            System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+          //  System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             System.out.println(i+"-->"+respostasFacil.get(i));
             System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
         int x = sc.nextInt();
+        if(x>=respostasFacil.size()){
+            System.out.println("+++++++RESPOSTA INVALIDA++++++");
+           return respostaAte3();
+        }
 
-        if(respostasFacil.get(x).equals(respostaCerta)){
-            System.out.println("ACERTOU------ " +super.valorBase+super.majoracao+getMajoracaoD()+ " pontos");
-            return 1;
-        }
         else{
-            System.out.println("ERROU------ 0 pontos");
-            return 0;
+            if(respostasFacil.get(x).equals(respostaCerta[0])){
+                System.out.println("ACERTOU------ " +contas()+ " pontos");
+                return 1;
+            }
+            else{
+                System.out.println("ERROU------ 0 pontos");
+                return 0;
+            }
         }
+
+    }
+
+
+    @Override
+    public int perguntaDificil() {
+        Collections.shuffle(respostasFacil);
+        Scanner sc = new Scanner(System.in);
+        for(int i=0;i< respostasDificil.size();i++){
+          //  System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            System.out.println(i+"-->"+respostasDificil.get(i));
+            System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        }
+        int x = sc.nextInt();
+
+        if(x>=respostasDificil.size()){
+            System.out.println("+++++++RESPOSTA INVALIDA++++++");
+            return perguntaDificil();
+        }
+
+        else{
+            if(respostasDificil.get(x).equals(respostaCerta[1])){
+
+                System.out.println("ACERTOU------ " +contas()+ " pontos");
+                return 1;
+            }
+            else{
+                System.out.println("ERROU------ 0 pontos");
+                return 0;
+            }
+        }
+
+    }
+
+    @Override
+    public int contas(){
+        int pontos =super.valorBase+super.majoracao+getMajoracaoD();
+        return pontos;
     }
 }

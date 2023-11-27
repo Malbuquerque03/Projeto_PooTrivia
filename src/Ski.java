@@ -39,19 +39,36 @@ public class Ski extends Desporto{
         Collections.shuffle(respostas);
         Scanner sc = new Scanner(System.in);
         for(int i=0;i< respostas.size();i++){
-            System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+           // System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             System.out.println(i+"-->"+respostas.get(i));
             System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
         int x = sc.nextInt();
 
-        if(respostas.get(x).equals(respostaCerta)){
-            System.out.println("ACERTOU------ " +super.valorBase+super.majoracao*getMajoracaoD()+ " pontos");
-            return 1;
+        if(x>=respostas.size()){
+            System.out.println("+++++++RESPOSTA INVALIDA++++++");
+            return respostaAte3();
         }
         else{
-            System.out.println("ERROU------ 0 pontos");
-            return 0;
+            if(respostas.get(x).equals(respostaCerta)){
+                System.out.println("ACERTOU------ " +contas()+ " pontos");
+                return 1;
+            }
+            else{
+                System.out.println("ERROU------ 0 pontos");
+                return 0;
+            }
         }
+
+    }
+    @Override
+    public int perguntaDificil(){
+      return  respostaAte3();
+    }
+
+    @Override
+    public int contas() {
+        int pontos=super.valorBase+super.majoracao*getMajoracaoD();
+        return pontos;
     }
 }

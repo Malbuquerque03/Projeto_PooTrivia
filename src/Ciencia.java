@@ -50,19 +50,60 @@ public class Ciencia extends Pergunta{
         Collections.shuffle(respostasFacil);
         Scanner sc = new Scanner(System.in);
         for(int i=0;i< respostasFacil.size();i++){
-            System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        //    System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             System.out.println(i+"-->"+respostasFacil.get(i));
             System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
         int x = sc.nextInt();
 
-        if(respostasFacil.get(x).equals(respostaCerta)){
-            System.out.println("ACERTOU------ " +super.valorBase+super.majoracao+ " pontos");
-            return 1;
+        if(x>=respostasFacil.size()){
+            System.out.println("+++++++RESPOSTA INVALIDA++++++");
+          return respostaAte3();
         }
         else{
-            System.out.println("ERROU------ 0 pontos");
-            return 0;
+            if(respostasFacil.get(x).equals(respostaCerta)){
+                System.out.println("ACERTOU------ " +contas()+ " pontos");
+                return 1;
+            }
+            else{
+                System.out.println("ERROU------ 0 pontos");
+                return 0;
+            }
         }
+
+    }
+
+    @Override
+    public int perguntaDificil() {
+        Collections.shuffle(respostasDificil);
+        Scanner sc = new Scanner(System.in);
+        for(int i=0;i< respostasDificil.size();i++){
+          //  System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            System.out.println(i+"-->"+respostasDificil.get(i));
+            System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        }
+        int x = sc.nextInt();
+
+        if(x>=respostasDificil.size()){
+            System.out.println("+++++++RESPOSTA INVALIDA++++++");
+            return perguntaDificil();
+        }
+        else {
+            if(respostasDificil.get(x).equals(respostaCerta)){
+                System.out.println("ACERTOU------ " +contas()+ " pontos");
+                return 1;
+            }
+            else{
+                System.out.println("ERROU------ 0 pontos");
+                return 0;
+            }
+        }
+
+    }
+
+    @Override
+    public int contas() {
+        int pontos=super.valorBase+super.majoracao;
+        return pontos;
     }
 }
