@@ -116,4 +116,6 @@ public class Artes extends Pergunta {
         int pontos=super.valorBase*super.majoracao;
         return pontos;
     }
+
+
 }

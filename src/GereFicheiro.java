@@ -1,11 +1,10 @@
+
 import java.io.*;
 import java.util.ArrayList;
 
 public class GereFicheiro {
-    // protected ArrayList respostas;
-//    protected File fo = new File(nomeFileObj( Jogador));
 
-    public void readTextFile(File f,ArrayList<Pergunta> perguntas, ArrayList respostas) {
+    public void readTextFile(File f, ArrayList<Pergunta> perguntas, ArrayList respostas) {
 
         if (f.exists() && f.isFile()) {
             try {
@@ -76,10 +75,9 @@ public class GereFicheiro {
     }
 
 
-    public void writeFicheiroObjetos(Jogador j) {
+    public void writeFicheiroObjetos(Jogador j, File f) {
 
         try {
-            File f = new File(j.nomeFile);
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(j);
@@ -95,10 +93,9 @@ public class GereFicheiro {
 
 
 
-    public void readFicheiroObjetos(Jogador e) {
+    public void readFicheiroObjetos(Jogador e, File fo, int aux, ArrayList<Jogador> jogadores) {
 
         try {
-            File fo =new File(e.nomeFile);
             FileInputStream fis = new FileInputStream(fo);
             ObjectInputStream ois = new ObjectInputStream(fis);
             e = (Jogador) ois.readObject();
@@ -163,7 +160,6 @@ public class GereFicheiro {
         return dificis;
     }
 
-
     private static void printarray(String[] a){        // metodo para ajuda de debug
         for(int i =0; i<a.length;i++){
             System.out.println("["+i+"] "+a[i]);
@@ -176,6 +172,12 @@ public class GereFicheiro {
                 System.out.println("[" + i + "] ["+j+"] " + a[i][j]);
             }
         }
+    }
+
+
+
+    private void adicionaJogador(Jogador e,ArrayList<Jogador> jogadores){
+        jogadores.add(new Jogador(e.getNome(),e.getCertas(),e.getErradas()));
     }
 
 }

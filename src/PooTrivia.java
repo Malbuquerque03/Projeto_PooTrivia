@@ -9,17 +9,11 @@ public class PooTrivia {
     }
     public PooTrivia(){
 
+        ArrayList<Jogador> jogadores= new ArrayList<>();
         ArrayList<Pergunta> perguntas = new ArrayList<>();
         ArrayList<String> respostas = new ArrayList<>();
-        ArrayList<Jogador> jogadores= new ArrayList<>();
-
-        System.out.println("---------------");
         GereFicheiro fich = new GereFicheiro();
         fich.readTextFile(new File("pootrivia.txt"), perguntas, respostas);
-
-        System.out.println("---------------");
-
-
         Jogo jogo=new Jogo();
         jogo.menu(perguntas,jogadores);
 

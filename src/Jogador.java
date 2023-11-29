@@ -58,6 +58,8 @@ public class Jogador {
         return certas;
     }
 
+    public String getNomeFile() { return nomeFile; }
+
     private String nomeFileObj(){
         String pathNome= "pootrivia_jogo_";
         String[] date = data.split("-|:| ");

@@ -1,5 +1,9 @@
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+
 
 public class Jogo {
 
@@ -12,7 +16,7 @@ public class Jogo {
 
     String resultadoELugar;
 
-    public void menu(ArrayList<Pergunta> perguntas,ArrayList<Jogador> jogadores){
+    public void menu(ArrayList<Pergunta> perguntas, ArrayList<Jogador> jogadores){
         Scanner sc = new Scanner(System.in);
         String response;
         while (true){
@@ -22,7 +26,7 @@ public class Jogo {
                 tdsrespostas.clear();
                 respostasCertas.clear();
                 respostasErradas.clear();
-                lig(perguntas);
+                lig(perguntas,jogadores);
             }
 
 
@@ -39,7 +43,7 @@ public class Jogo {
 
 
 
-    public void lig(ArrayList<Pergunta> perguntas){
+    public void lig(ArrayList<Pergunta> perguntas,ArrayList<Jogador> jogadores){
         int jogada=1;
         int resultado;
 
@@ -61,17 +65,9 @@ public class Jogo {
             jogada++;
         }
         System.out.println("\n+++++++++++++++++++++++++++++FIM DO JOGO+++++++++++++++++++++++++++++");
-        int pontuacao=0;
-        for(String r: respostasCertas){
-            for(Pergunta p:perguntas){
-                if(r.substring(0,r.length()-1).equalsIgnoreCase(p.pergunta)){
-                    pontuacao+= p.contas();
-                }
-            }
 
-        }
-
-        System.out.println("-->Pontuação: "+ pontuacao);
+        int pontos= pontuacao(perguntas,jogadores,null);
+        System.out.println("-->Pontuação: "+ pontos);
         System.out.print("-->Nome: ");
         String nome= sc.nextLine();
         System.out.println("-->Certas: ");
@@ -91,12 +87,14 @@ public class Jogo {
 
     private void verSeECorreta(int resultado,int index, int jogada,ArrayList<Pergunta> perguntas){
         if(resultado==1){
-            resultadoELugar= perguntas.get(index).pergunta + jogada;
+           // resultadoELugar= perguntas.get(index).pergunta + jogada;
+            resultadoELugar= perguntas.get(index).pergunta;
             respostasCertas.add(resultadoELugar);
             tdsrespostas.add(index);
         }
         else if(resultado==0){
-            resultadoELugar= perguntas.get(index).pergunta + jogada;
+           // resultadoELugar= perguntas.get(index).pergunta + jogada;
+            resultadoELugar= perguntas.get(index).pergunta;
             respostasErradas.add(resultadoELugar);
             tdsrespostas.add(index);
         }
@@ -113,4 +111,89 @@ public class Jogo {
             return index;
         }
     }
+
+
+
+
+    private void listFilesExample(Jogador j,ArrayList<Jogador> jogadores) {
+
+        // Specify the directory path
+        String directoryPath = "C:\\Users\\Utilizador\\IdeaProjects\\Projeto_PooTrivia";
+
+        // Create a File object for the specified directory
+        File directory = new File(directoryPath);
+
+        // Check if the directory exists
+        if (directory.exists() && directory.isDirectory()) {
+            // List all files in the directory
+            File[] files = directory.listFiles();
+
+            // Check if any files are found
+            if (files != null) {
+                // Print the names of the files
+                for (File file : files) {
+                    if(file.getName().endsWith(".dat")){
+                        File fn = new File(file.getName());
+                        f.readFicheiroObjetos(j,fn,1,jogadores);
+                        System.out.println(file.getName());
+                    }
+
+                }
+            } else {
+                System.out.println("No files found in the directory.");
+            }
+        } else {
+            System.out.println("The specified directory does not exist.");
+        }
+
+    }
+
+    private void top3(ArrayList<Jogador> jogadores, ArrayList<Pergunta> perguntas){
+        if(jogadores.size()>0) {
+            Jogador max;
+            boolean sorted = false;
+            while (!sorted) { // enquanto n tiver ordenado vai continuar
+                sorted = true;
+                for (int i = 0; i < jogadores.size() - 1; i++) {
+                    if (pontuacao(perguntas,jogadores,jogadores.get(i))>pontuacao(perguntas,jogadores,jogadores.get(i + 1))) { // se a pontuacao da esquerda for maior q a da direita troca
+                        max = jogadores.get(i);
+                        jogadores.set(i, jogadores.get(i + 1));
+                        jogadores.set(i + 1, max); // trocas
+                        sorted = false; //ainda n sabemos se ta ordenado ou n 
+                    }
+                }
+            }
+        }
+        for(int i=1;i<=3;i++){
+            System.out.println("********LUGAR Nº "+ i+ "********");
+            System.out.println("NOME-->"+jogadores.get(i-1).getNome());
+            System.out.println("DATA--> "+jogadores.get(i-1).getData());
+            System.out.println("FICHEIRO--> "+jogadores.get(i-1).getNomeFile());
+        }
+
+
+    }
+    private int pontuacao(ArrayList<Pergunta> perguntas,ArrayList<Jogador> jogadores, Jogador j){
+        int pontos=0;
+        if(jogadores.isEmpty()){
+            for(String r: respostasCertas){
+                for(Pergunta p:perguntas){
+                    if(r.equalsIgnoreCase(p.pergunta))
+                        pontos+= p.contas();
+                }
+            }
+        }
+        else{
+            for(Object r: j.getCertas()){
+                for(Pergunta p:perguntas){
+                    if(r.equals(p.pergunta))
+                        pontos+= p.contas();
+                }
+            }
+
+        }
+
+        return pontos;
+    }
+  
 }
