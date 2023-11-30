@@ -130,13 +130,17 @@ public class Jogo {
 
             // Check if any files are found
             if (files != null) {
+                int cont=0;
                 // Print the names of the files
                 for (File file : files) {
                     if(file.getName().endsWith(".dat")){
                         File fn = new File(file.getName());
                         f.readFicheiroObjetos(j,fn,1,jogadores);
+                        cont++;
                         System.out.println(file.getName());
+
                     }
+                    System.out.println("CONT--->"+cont);
 
                 }
             } else {
@@ -155,7 +159,7 @@ public class Jogo {
             while (!sorted) { // enquanto n tiver ordenado vai continuar
                 sorted = true;
                 for (int i = 0; i < jogadores.size() - 1; i++) {
-                    if (pontuacao(perguntas,jogadores,jogadores.get(i))>pontuacao(perguntas,jogadores,jogadores.get(i + 1))) { // se a pontuacao da esquerda for maior q a da direita troca
+                    if (pontuacao(perguntas, jogadores, jogadores.get(i)) > pontuacao(perguntas, jogadores, jogadores.get(i + 1))) { // se a pontuacao da esquerda for maior q a da direita troca
                         max = jogadores.get(i);
                         jogadores.set(i, jogadores.get(i + 1));
                         jogadores.set(i + 1, max); // trocas
@@ -163,14 +167,32 @@ public class Jogo {
                     }
                 }
             }
-        }
-        for(int i=1;i<=3;i++){
-            System.out.println("********LUGAR Nº "+ i+ "********");
-            System.out.println("NOME-->"+jogadores.get(i-1).getNome());
-            System.out.println("DATA--> "+jogadores.get(i-1).getData());
-            System.out.println("FICHEIRO--> "+jogadores.get(i-1).getNomeFile());
-        }
 
+            if (jogadores.size() < 4){
+                if(jogadores.size()==1)
+                    System.out.println("********LUGAR Nº 1 ********\n"+ "NOME-->" + jogadores.get(0).getNome()+"\nDATA--> " + jogadores.get(0).getData()+"\nFICHEIRO--> " + jogadores.get(0).getNomeFile());
+                else{
+                    for (int i = 1; i <= jogadores.size(); i++) {
+                        System.out.println("********LUGAR Nº " + i + "********");
+                        System.out.println("NOME-->" + jogadores.get(i - 1).getNome());
+                        System.out.println("DATA--> " + jogadores.get(i - 1).getData());
+                        System.out.println("FICHEIRO--> " + jogadores.get(i - 1).getNomeFile());
+                    }
+                }
+
+            }
+
+            else{
+                for (int i = 1; i <= 3; i++) {
+                    System.out.println("********LUGAR Nº " + i + "********");
+                    System.out.println("NOME-->" + jogadores.get(i - 1).getNome());
+                    System.out.println("DATA--> " + jogadores.get(i - 1).getData());
+                    System.out.println("FICHEIRO--> " + jogadores.get(i - 1).getNomeFile());
+                }
+            }
+
+
+        }
 
     }
     private int pontuacao(ArrayList<Pergunta> perguntas,ArrayList<Jogador> jogadores, Jogador j){
