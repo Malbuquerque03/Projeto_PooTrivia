@@ -40,6 +40,18 @@ public class Artes extends Pergunta {
 
 
     //Metodos
+    @Override
+    public ArrayList getEasyAnswer(){
+        ArrayList<String> resp= new ArrayList();
+        for (String resposta : respostas.subList(1, respostas.size())) {
+            resp.add(resposta);
+        }
+        Collections.shuffle(resp);
+        resp = new ArrayList<>(resp.subList(0,  resp.size() / 2));
+        resp.add(respostas.get(0));
+        Collections.shuffle(resp);
+        return resp;
+    }
 
     @Override
     public int respostaAte3(){
@@ -82,13 +94,17 @@ public class Artes extends Pergunta {
         }
 
     }
-
+    @Override
+    public ArrayList getHardAnswer(){
+        Collections.shuffle(respostas);
+        return respostas;
+    }
     @Override
     public int perguntaDificil() {
         Collections.shuffle(respostas);
         Scanner sc = new Scanner(System.in);
         for(int i=0;i< respostas.size();i++){
-         //   System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            //   System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             System.out.println(i+"-->"+respostas.get(i));
             System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
@@ -117,5 +133,9 @@ public class Artes extends Pergunta {
         return pontos;
     }
 
+    @Override
+    public String respostaCerta(int jogada) {
+        return getRespostaCerta();
+    }
 
 }

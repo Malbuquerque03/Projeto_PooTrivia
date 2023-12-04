@@ -3,13 +3,13 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Natacao extends Desporto{
-    protected ArrayList respostas;
+    protected ArrayList<String> respostas;
     protected String respostaCerta;
 
 
     public Natacao(String pergunta, ArrayList respostas,String respostaCerta) {
         super(pergunta,10);
-       this.respostas=respostas;
+        this.respostas=respostas;
         this.respostaCerta = respostaCerta;
     }
 
@@ -30,14 +30,18 @@ public class Natacao extends Desporto{
 
 
     //Metodos
-
+    @Override
+    public ArrayList getEasyAnswer(){
+        Collections.shuffle(respostas);
+        return(respostas);
+    }
 
     @Override
     public int respostaAte3(){
         Collections.shuffle(respostas);
         Scanner sc = new Scanner(System.in);
         for(int i=0;i< respostas.size();i++){
-           // System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            // System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             System.out.println(i+"-->"+respostas.get(i));
             System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
@@ -59,6 +63,10 @@ public class Natacao extends Desporto{
 
     }
     @Override
+    public ArrayList getHardAnswer(){
+        return getEasyAnswer();
+    }
+    @Override
     public int perguntaDificil(){
         return  respostaAte3();
     }
@@ -67,5 +75,9 @@ public class Natacao extends Desporto{
     public int contas() {
         int pontos= super.valorBase+super.majoracao+getMajoracaoD();
         return pontos;
+    }
+    @Override
+    public String respostaCerta(int jogador) {
+        return getespostaCerta();
     }
 }

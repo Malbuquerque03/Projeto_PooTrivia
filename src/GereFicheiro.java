@@ -4,6 +4,13 @@ import java.util.ArrayList;
 
 public class GereFicheiro {
 
+
+    /**
+     *
+     * @param f
+     * @param perguntas
+     * @param respostas
+     */
     public void readTextFile(File f, ArrayList<Pergunta> perguntas, ArrayList respostas) {
 
         if (f.exists() && f.isFile()) {

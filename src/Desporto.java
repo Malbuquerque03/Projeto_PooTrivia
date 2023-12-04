@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Desporto extends Pergunta {
     protected int majoracaoD;
 
@@ -18,10 +20,17 @@ public class Desporto extends Pergunta {
 
 
     //Metodos
-
+    @Override
+    public ArrayList getEasyAnswer(){return null;}
     @Override
     public int respostaAte3(){ return 3; }
-
+    @Override
+    public ArrayList getHardAnswer(){
+        return null;
+    }
     @Override
     public int perguntaDificil(){ return 3; }
+
+    @Override
+    public String respostaCerta(int jogada){ return null; }
 }

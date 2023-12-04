@@ -3,8 +3,8 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Ciencia extends Pergunta{
-    protected ArrayList respostasFacil;
-    protected ArrayList respostasDificil;
+    protected ArrayList<String> respostasFacil;
+    protected ArrayList<String> respostasDificil;
     protected String respostaCerta;
 
 
@@ -44,13 +44,17 @@ public class Ciencia extends Pergunta{
 
 
     //Metodos
-
-@Override
+    @Override
+    public ArrayList getEasyAnswer(){
+        Collections.shuffle(respostasFacil);
+        return respostasFacil;
+    }
+    @Override
     public int respostaAte3(){
         Collections.shuffle(respostasFacil);
         Scanner sc = new Scanner(System.in);
         for(int i=0;i< respostasFacil.size();i++){
-        //    System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            //    System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             System.out.println(i+"-->"+respostasFacil.get(i));
             System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
@@ -58,7 +62,7 @@ public class Ciencia extends Pergunta{
 
         if(x>=respostasFacil.size()){
             System.out.println("+++++++RESPOSTA INVALIDA++++++");
-          return respostaAte3();
+            return respostaAte3();
         }
         else{
             if(respostasFacil.get(x).equals(respostaCerta)){
@@ -72,13 +76,17 @@ public class Ciencia extends Pergunta{
         }
 
     }
-
+    @Override
+    public ArrayList getHardAnswer(){
+        Collections.shuffle(respostasDificil);
+        return respostasDificil;
+    }
     @Override
     public int perguntaDificil() {
         Collections.shuffle(respostasDificil);
         Scanner sc = new Scanner(System.in);
         for(int i=0;i< respostasDificil.size();i++){
-          //  System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            //  System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             System.out.println(i+"-->"+respostasDificil.get(i));
             System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
@@ -105,5 +113,10 @@ public class Ciencia extends Pergunta{
     public int contas() {
         int pontos=super.valorBase+super.majoracao;
         return pontos;
+    }
+
+    @Override
+    public String respostaCerta(int jogada) {
+        return getRespostaCerta();
     }
 }

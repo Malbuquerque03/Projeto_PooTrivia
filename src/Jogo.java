@@ -1,6 +1,5 @@
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 
@@ -41,7 +40,22 @@ public class Jogo {
         }
     }
 
+    public String fazPergunta(ArrayList<Pergunta> perguntas, int jogada, int index) {
 
+        if(jogada <= 5){
+            return ("PERGUNTA "+jogada +": "+ perguntas.get(index).pergunta);
+
+        }
+        return null;
+    }
+    public ArrayList fazResposta(ArrayList<Pergunta> perguntas, int jogada, int index){
+        if(jogada<3) {
+            return perguntas.get(index).getEasyAnswer();
+        }
+        else{
+            return perguntas.get(index).getHardAnswer();
+        }
+    }
 
     public void lig(ArrayList<Pergunta> perguntas,ArrayList<Jogador> jogadores){
         int jogada=1;
@@ -54,7 +68,7 @@ public class Jogo {
 
             System.out.println("\t\t\tOPÇÕES:");
             if(jogada<=3){
-               resultado= perguntas.get(index).respostaAte3();
+                resultado= perguntas.get(index).respostaAte3();
                 verSeECorreta(resultado,index,jogada,perguntas);
             }
             else{
@@ -65,7 +79,6 @@ public class Jogo {
             jogada++;
         }
         System.out.println("\n+++++++++++++++++++++++++++++FIM DO JOGO+++++++++++++++++++++++++++++");
-
         int pontos= pontuacao(perguntas,jogadores,null);
         System.out.println("-->Pontuação: "+ pontos);
         System.out.print("-->Nome: ");
@@ -78,22 +91,38 @@ public class Jogo {
         for(String r:respostasErradas){
             System.out.println("\t\t->"+r);
         }
+
         Jogador j= new Jogador(nome,respostasErradas,respostasCertas);
         System.out.println("-->Data: "+ j.data);
-        f.writeFicheiroObjetos(j);
-        f.readFicheiroObjetos(j);
+        File filename = new File(j.getNomeFile());
+        f.writeFicheiroObjetos(j,filename);
+        f.readFicheiroObjetos(j, filename,0,jogadores);
+        listFilesExample(j,jogadores);
+        if(!jogadores.isEmpty()){
+            for(Jogador jog : jogadores){
+                System.out.println("------------JOGADOR---------");
+                System.out.println(jog.nome);
+                System.out.println(jog.data);
+                System.out.println(jog.nomeFile);
+                System.out.println("----------------------------");
+            }
+        }
+
+        top3(jogadores,perguntas);
+
         System.out.println("\n+++++++++++++++++++++++++++++++++DONE+++++++++++++++++++++++++++++++++");
+        System.out.println("\n+++++++++++++++++++++++++++++++++AAAAAAAAAAAAAAAAAAaa+++++++++++++++++++++++++++++++++");
+
+        System.out.println("\n+++++++++++++++++++++++++++++++++LITINHA TDS+++++++++++++++++++++++++++++++++");
     }
 
     private void verSeECorreta(int resultado,int index, int jogada,ArrayList<Pergunta> perguntas){
         if(resultado==1){
-           // resultadoELugar= perguntas.get(index).pergunta + jogada;
             resultadoELugar= perguntas.get(index).pergunta;
             respostasCertas.add(resultadoELugar);
             tdsrespostas.add(index);
         }
         else if(resultado==0){
-           // resultadoELugar= perguntas.get(index).pergunta + jogada;
             resultadoELugar= perguntas.get(index).pergunta;
             respostasErradas.add(resultadoELugar);
             tdsrespostas.add(index);
@@ -103,11 +132,12 @@ public class Jogo {
         }
     }
 
-    private int verificacao(ArrayList<Pergunta> perguntas) {
+    public int verificacao(ArrayList<Pergunta> perguntas) {
         int index = (int) (Math.random() * perguntas.size());
         if (tdsrespostas.contains(index)) {
             return verificacao(perguntas);
         } else {
+            tdsrespostas.add(index);
             return index;
         }
     }
@@ -118,7 +148,7 @@ public class Jogo {
     private void listFilesExample(Jogador j,ArrayList<Jogador> jogadores) {
 
         // Specify the directory path
-        String directoryPath = "C:\\Users\\Utilizador\\IdeaProjects\\Projeto_PooTrivia";
+        String directoryPath = "C:\\Users\\Asus\\Documents\\faculdade\\Projeto_PooTrivia";
 
         // Create a File object for the specified directory
         File directory = new File(directoryPath);
@@ -130,17 +160,13 @@ public class Jogo {
 
             // Check if any files are found
             if (files != null) {
-                int cont=0;
                 // Print the names of the files
                 for (File file : files) {
+                    // GereFicheiro gg= new GereFicheiro();
                     if(file.getName().endsWith(".dat")){
                         File fn = new File(file.getName());
                         f.readFicheiroObjetos(j,fn,1,jogadores);
-                        cont++;
-                        System.out.println(file.getName());
-
                     }
-                    System.out.println("CONT--->"+cont);
 
                 }
             } else {
@@ -163,7 +189,7 @@ public class Jogo {
                         max = jogadores.get(i);
                         jogadores.set(i, jogadores.get(i + 1));
                         jogadores.set(i + 1, max); // trocas
-                        sorted = false; //ainda n sabemos se ta ordenado ou n 
+                        sorted = false; //ainda n sabemos se ta ordenado ou n
                     }
                 }
             }
@@ -217,5 +243,5 @@ public class Jogo {
 
         return pontos;
     }
-  
+
 }

@@ -75,6 +75,17 @@ public class Jogador {
 
         return pathNome;
     }
+
+    @Override
+    public String toString() {
+        return "Jogador{" +
+                "data='" + data + '\'' +
+                ", nome='" + nome + '\'' +
+                ", erradas=" + erradas +
+                ", certas=" + certas +
+                ", nomeFile='" + nomeFile + '\'' +
+                '}';
+    }
 }
 
 

@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Ski extends Desporto{
-    protected ArrayList respostas;
+    protected ArrayList<String> respostas;
     protected String respostaCerta;
 
 
@@ -33,13 +33,17 @@ public class Ski extends Desporto{
 
 
     //Metodos
-
+    @Override
+    public ArrayList getEasyAnswer(){
+        Collections.shuffle(respostas);
+        return respostas;
+    }
     @Override
     public int respostaAte3(){
         Collections.shuffle(respostas);
         Scanner sc = new Scanner(System.in);
         for(int i=0;i< respostas.size();i++){
-           // System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            // System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             System.out.println(i+"-->"+respostas.get(i));
             System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
@@ -62,13 +66,22 @@ public class Ski extends Desporto{
 
     }
     @Override
+    public ArrayList getHardAnswer(){
+
+        return getEasyAnswer();
+    }
+    @Override
     public int perguntaDificil(){
-      return  respostaAte3();
+        return  respostaAte3();
     }
 
     @Override
     public int contas() {
         int pontos=super.valorBase+super.majoracao*getMajoracaoD();
         return pontos;
+    }
+    @Override
+    public String respostaCerta(int jogada) {
+        return getespostaCerta();
     }
 }
