@@ -235,24 +235,14 @@ public class Jogo {
 
     private int pontuacao(ArrayList<Pergunta> perguntas,ArrayList<Jogador> jogadores, Jogador j){
         int pontos=0;
-        if(jogadores.isEmpty()){
+
             for(String r: respostasCertas){
                 for(Pergunta p:perguntas){
                     if(r.equalsIgnoreCase(p.getPergunta()))
                         pontos+= p.contas();
                 }
             }
-        }
-        else{
-            for(String r: j.getCertas()){
-                System.out.println("Type of r: " + r.getClass());
-                for(Pergunta p:perguntas){
-                    if(r.equalsIgnoreCase(p.getPergunta()))
-                        pontos+= p.contas();
-                }
-            }
 
-        }
 
         return pontos;
     }
