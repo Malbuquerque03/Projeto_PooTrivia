@@ -3,8 +3,8 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Ciencia extends Pergunta{
-    protected ArrayList<String> respostasFacil;
-    protected ArrayList<String> respostasDificil;
+    protected ArrayList respostasFacil;
+    protected ArrayList respostasDificil;
     protected String respostaCerta;
 
 
@@ -44,66 +44,90 @@ public class Ciencia extends Pergunta{
 
 
     //Metodos
-    @Override
-    public ArrayList getEasyAnswer(){
-        Collections.shuffle(respostasFacil);
-        return respostasFacil;
-    }
-    @Override
-    public int respostaAte3(){
-        Collections.shuffle(respostasFacil);
-        Scanner sc = new Scanner(System.in);
-        for(int i=0;i< respostasFacil.size();i++){
-            //    System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            System.out.println(i+"-->"+respostasFacil.get(i));
-            System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        }
-        int x = sc.nextInt();
 
-        if(x>=respostasFacil.size()){
-            System.out.println("+++++++RESPOSTA INVALIDA++++++");
-            return respostaAte3();
+    @Override
+    public int questionario(int jogada){
+        Collections.shuffle(getRespostasFacil());
+        Collections.shuffle(getRespostasDificil());
+        Scanner sc = new Scanner(System.in);
+        if(jogada<3){
+            for(int i=0;i< getRespostasFacil().size();i++){
+                //    System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                System.out.println(i+"-->"+respostasFacil.get(i));
+                System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            }
+            int x = sc.nextInt();
+
+            if(x>=getRespostasFacil().size()){
+                System.out.println("+++++++RESPOSTA INVALIDA++++++");
+                return questionario(jogada);
+            }
+            else{
+                if(getRespostasFacil().get(x).equals(getRespostaCerta())){
+                    System.out.println("ACERTOU------ " +contas()+ " pontos");
+                    return 1;
+                }
+                else{
+                    System.out.println("ERROU------ 0 pontos");
+                    return 0;
+                }
+            }
+        }
+
+        else{
+            for(int i=0;i< getRespostasDificil().size();i++){
+                //  System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                System.out.println(i+"-->"+getRespostasDificil().get(i));
+                System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            }
+            int x = sc.nextInt();
+
+            if(x>=getRespostasDificil().size()){
+                System.out.println("+++++++RESPOSTA INVALIDA++++++");
+                return questionario(jogada);
+            }
+            else {
+                if(getRespostasDificil().get(x).equals(getRespostaCerta())){
+                    System.out.println("ACERTOU------ " +contas()+ " pontos");
+                    return 1;
+                }
+                else{
+                    System.out.println("ERROU------ 0 pontos");
+                    return 0;
+                }
+            }
+        }
+
+    }
+
+    
+    @Override
+    public ArrayList getAnswers(int jogada){
+        if(jogada<3){
+            Collections.shuffle(getRespostasFacil());
+            return getRespostasFacil();
         }
         else{
-            if(respostasFacil.get(x).equals(respostaCerta)){
-                System.out.println("ACERTOU------ " +contas()+ " pontos");
-                return 1;
+            Collections.shuffle(getRespostasDificil());
+            return getRespostasDificil();
+        }
+    }
+
+    @Override
+    public boolean checkAnswer(String respostaSelecionada,int jogada){
+        if (jogada < 3) {
+            if(getRespostasFacil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta())){
+                return true;
             }
             else{
-                System.out.println("ERROU------ 0 pontos");
-                return 0;
+                return false;
             }
-        }
 
-    }
-    @Override
-    public ArrayList getHardAnswer(){
-        Collections.shuffle(respostasDificil);
-        return respostasDificil;
-    }
-    @Override
-    public int perguntaDificil() {
-        Collections.shuffle(respostasDificil);
-        Scanner sc = new Scanner(System.in);
-        for(int i=0;i< respostasDificil.size();i++){
-            //  System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            System.out.println(i+"-->"+respostasDificil.get(i));
-            System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        }
-        int x = sc.nextInt();
-
-        if(x>=respostasDificil.size()){
-            System.out.println("+++++++RESPOSTA INVALIDA++++++");
-            return perguntaDificil();
-        }
-        else {
-            if(respostasDificil.get(x).equals(respostaCerta)){
-                System.out.println("ACERTOU------ " +contas()+ " pontos");
-                return 1;
-            }
-            else{
-                System.out.println("ERROU------ 0 pontos");
-                return 0;
+        } else {
+            if (getRespostasDificil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta())) {
+                return true;
+            } else {
+                return false;
             }
         }
 
@@ -113,10 +137,5 @@ public class Ciencia extends Pergunta{
     public int contas() {
         int pontos=super.valorBase+super.majoracao;
         return pontos;
-    }
-
-    @Override
-    public String respostaCerta(int jogada) {
-        return getRespostaCerta();
     }
 }

@@ -3,8 +3,8 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Futebol extends Desporto{
-    protected ArrayList<String> respostasFacil;
-    protected ArrayList<String> respostasDificil;
+    protected ArrayList respostasFacil;
+    protected ArrayList respostasDificil;
     protected String[] respostaCerta;
 
     public Futebol(String pergunta,  ArrayList respostasFacil, ArrayList respostasDificil, String[] respostaCerta) {
@@ -46,69 +46,93 @@ public class Futebol extends Desporto{
 
 
     //Metodos
+
     @Override
-    public ArrayList getEasyAnswer(){
-        Collections.shuffle(respostasFacil);
-        return respostasFacil;
-    }
-    @Override
-    public int respostaAte3(){
-        Collections.shuffle(respostasFacil);
+    public int questionario(int jogada){
         Scanner sc = new Scanner(System.in);
-        for(int i=0;i< respostasFacil.size();i++){
-            //  System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            System.out.println(i+"-->"+respostasFacil.get(i));
-            System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        if (jogada<3){
+            Collections.shuffle(respostasFacil);
+
+            for(int i=0;i< getRespostasFacil().size();i++){
+                //  System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                System.out.println(i+"-->"+respostasFacil.get(i));
+                System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            }
+            int x = sc.nextInt();
+            if(x>=getRespostasFacil().size()){
+                System.out.println("+++++++RESPOSTA INVALIDA++++++");
+                return questionario(jogada);
+            }
+
+            else{
+                if(getRespostasFacil().get(x).equals(respostaCerta[0])){
+                    System.out.println("ACERTOU------ " +contas()+ " pontos");
+                    return 1;
+                }
+                else{
+                    System.out.println("ERROU------ 0 pontos");
+                    return 0;
+                }
+            }
         }
-        int x = sc.nextInt();
-        if(x>=respostasFacil.size()){
-            System.out.println("+++++++RESPOSTA INVALIDA++++++");
-            return respostaAte3();
+        else{
+            Collections.shuffle(getRespostasDificil());
+            for(int i=0;i< getRespostasDificil().size();i++){
+                //  System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                System.out.println(i+"-->"+getRespostasDificil().get(i));
+                System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            }
+            int x = sc.nextInt();
+
+            if(x>=respostasDificil.size()){
+                System.out.println("+++++++RESPOSTA INVALIDA++++++");
+                return questionario(jogada);
+            }
+
+            else{
+                if(getRespostasDificil().get(x).equals(getRespostaCerta()[1])){
+
+                    System.out.println("ACERTOU------ " +contas()+ " pontos");
+                    return 1;
+                }
+                else{
+                    System.out.println("ERROU------ 0 pontos");
+                    return 0;
+                }
+            }
         }
 
-        else{
-            if(respostasFacil.get(x).equals(respostaCerta[0])){
-                System.out.println("ACERTOU------ " +contas()+ " pontos");
-                return 1;
+
+    }
+
+    @Override
+    public ArrayList getAnswers(int jogada){
+        if(jogada<3){
+            Collections.shuffle(getRespostasFacil());
+            return getRespostasFacil();
+        }
+       else{
+            Collections.shuffle(getRespostasDificil());
+            return getRespostasDificil();
+        }
+    }
+
+
+    @Override
+    public boolean checkAnswer(String respostaSelecionada,int jogada){
+        if (jogada < 3) {
+            if(getRespostasFacil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta()[0])){
+                return true;
             }
             else{
-                System.out.println("ERROU------ 0 pontos");
-                return 0;
+                return false;
             }
-        }
 
-    }
-    @Override
-    public ArrayList getHardAnswer(){
-        Collections.shuffle(respostasDificil);
-        return respostasDificil;
-    }
-
-    @Override
-    public int perguntaDificil() {
-        Collections.shuffle(respostasFacil);
-        Scanner sc = new Scanner(System.in);
-        for(int i=0;i< respostasDificil.size();i++){
-            //  System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            System.out.println(i+"-->"+respostasDificil.get(i));
-            System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        }
-        int x = sc.nextInt();
-
-        if(x>=respostasDificil.size()){
-            System.out.println("+++++++RESPOSTA INVALIDA++++++");
-            return perguntaDificil();
-        }
-
-        else{
-            if(respostasDificil.get(x).equals(respostaCerta[1])){
-
-                System.out.println("ACERTOU------ " +contas()+ " pontos");
-                return 1;
-            }
-            else{
-                System.out.println("ERROU------ 0 pontos");
-                return 0;
+        } else {
+            if (getRespostasDificil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta()[1])) {
+                return true;
+            } else {
+                return false;
             }
         }
 
@@ -118,12 +142,5 @@ public class Futebol extends Desporto{
     public int contas(){
         int pontos =super.valorBase+super.majoracao+getMajoracaoD();
         return pontos;
-    }
-    @Override
-    public String respostaCerta(int jogada){
-        if(jogada<=3)
-        return respostaCerta[0];
-        else
-            return respostaCerta[1];
     }
 }

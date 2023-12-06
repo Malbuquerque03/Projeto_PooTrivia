@@ -8,7 +8,7 @@ public class Jogo {
 
     ArrayList<String> respostasCertas =new ArrayList<>() ;
     ArrayList<String> respostasErradas =new ArrayList<>() ;
-    ArrayList<Integer> tdsrespostas =new ArrayList<>() ;
+    ArrayList<Integer> tdsrespostas1 =new ArrayList<>() ;
 
     GereFicheiro f = new GereFicheiro();
     Scanner sc = new Scanner(System.in);
@@ -22,7 +22,7 @@ public class Jogo {
             System.out.println("\t\t\tVAMOS JOGAR??(S/N)");
             response = sc.nextLine();
             if (response.equalsIgnoreCase("sim") || response.equalsIgnoreCase("s")){
-                tdsrespostas.clear();
+                tdsrespostas1.clear();
                 respostasCertas.clear();
                 respostasErradas.clear();
                 lig(perguntas,jogadores);
@@ -49,12 +49,27 @@ public class Jogo {
         return null;
     }
     public ArrayList fazResposta(ArrayList<Pergunta> perguntas, int jogada, int index){
-        if(jogada<3) {
-            return perguntas.get(index).getEasyAnswer();
-        }
-        else{
-            return perguntas.get(index).getHardAnswer();
-        }
+        return perguntas.get(index).getAnswers(jogada);
+    }
+
+    public boolean checksAnswer(ArrayList<Pergunta> perguntas, int jogada, int index,String respostaSelecionada,ArrayList<String> respostasCertas,ArrayList<String> respostasErradas){
+        boolean resultado;
+
+            resultado = perguntas.get(index).checkAnswer(respostaSelecionada,jogada);
+            if(resultado==true){
+                resultadoELugar= perguntas.get(index).pergunta;
+                respostasCertas.add(resultadoELugar);
+            }
+            else if(resultado==false) {
+                resultadoELugar = perguntas.get(index).pergunta;
+                respostasErradas.add(resultadoELugar);
+            }
+            else{
+                System.out.println("ERRO ERRO");
+            }
+
+
+        return resultado;
     }
 
     public void lig(ArrayList<Pergunta> perguntas,ArrayList<Jogador> jogadores){
@@ -63,18 +78,13 @@ public class Jogo {
 
         while(jogada<=5){
 
-            int index = verificacao(perguntas);
+            int index = verificacao(perguntas,tdsrespostas1);
             System.out.println("\t\t\tPERGUNTA "+jogada +":\n"+ perguntas.get(index).pergunta);
 
             System.out.println("\t\t\tOPÇÕES:");
-            if(jogada<=3){
-                resultado= perguntas.get(index).respostaAte3();
-                verSeECorreta(resultado,index,jogada,perguntas);
-            }
-            else{
-                resultado= perguntas.get(index).perguntaDificil();
-                verSeECorreta(resultado,index,jogada,perguntas);
-            }
+            resultado= perguntas.get(index).questionario(jogada);
+            verSeECorreta(resultado,index,perguntas);
+
 
             jogada++;
         }
@@ -111,33 +121,30 @@ public class Jogo {
         top3(jogadores,perguntas);
 
         System.out.println("\n+++++++++++++++++++++++++++++++++DONE+++++++++++++++++++++++++++++++++");
-        System.out.println("\n+++++++++++++++++++++++++++++++++AAAAAAAAAAAAAAAAAAaa+++++++++++++++++++++++++++++++++");
 
-        System.out.println("\n+++++++++++++++++++++++++++++++++LITINHA TDS+++++++++++++++++++++++++++++++++");
     }
 
-    private void verSeECorreta(int resultado,int index, int jogada,ArrayList<Pergunta> perguntas){
+    private void verSeECorreta(int resultado,int index,ArrayList<Pergunta> perguntas){
         if(resultado==1){
-            resultadoELugar= perguntas.get(index).pergunta;
-            respostasCertas.add(resultadoELugar);
-            tdsrespostas.add(index);
+            respostasCertas.add(perguntas.get(index).getPergunta());
+            tdsrespostas1.add(index);
         }
         else if(resultado==0){
-            resultadoELugar= perguntas.get(index).pergunta;
-            respostasErradas.add(resultadoELugar);
-            tdsrespostas.add(index);
+            respostasErradas.add(perguntas.get(index).getPergunta());
+            tdsrespostas1.add(index);
         }
         else{
             System.out.println("ERRO ERRO");
         }
     }
 
-    public int verificacao(ArrayList<Pergunta> perguntas) {
+
+
+    public int verificacao(ArrayList<Pergunta> perguntas,ArrayList<Integer> tdsrespostas) {
         int index = (int) (Math.random() * perguntas.size());
         if (tdsrespostas.contains(index)) {
-            return verificacao(perguntas);
+            return verificacao(perguntas,tdsrespostas);
         } else {
-            tdsrespostas.add(index);
             return index;
         }
     }
@@ -148,7 +155,7 @@ public class Jogo {
     private void listFilesExample(Jogador j,ArrayList<Jogador> jogadores) {
 
         // Specify the directory path
-        String directoryPath = "C:\\Users\\Asus\\Documents\\faculdade\\Projeto_PooTrivia";
+        String directoryPath = "C:\\Users\\Utilizador\\IdeaProjects\\Projeto_PooTrivia";
 
         // Create a File object for the specified directory
         File directory = new File(directoryPath);
@@ -160,12 +167,16 @@ public class Jogo {
 
             // Check if any files are found
             if (files != null) {
+                int count =0;
                 // Print the names of the files
                 for (File file : files) {
+
                     // GereFicheiro gg= new GereFicheiro();
                     if(file.getName().endsWith(".dat")){
+
                         File fn = new File(file.getName());
                         f.readFicheiroObjetos(j,fn,1,jogadores);
+                        System.out.println(fn.getName());
                     }
 
                 }
@@ -221,20 +232,22 @@ public class Jogo {
         }
 
     }
+
     private int pontuacao(ArrayList<Pergunta> perguntas,ArrayList<Jogador> jogadores, Jogador j){
         int pontos=0;
         if(jogadores.isEmpty()){
             for(String r: respostasCertas){
                 for(Pergunta p:perguntas){
-                    if(r.equalsIgnoreCase(p.pergunta))
+                    if(r.equalsIgnoreCase(p.getPergunta()))
                         pontos+= p.contas();
                 }
             }
         }
         else{
-            for(Object r: j.getCertas()){
+            for(String r: j.getCertas()){
+                System.out.println("Type of r: " + r.getClass());
                 for(Pergunta p:perguntas){
-                    if(r.equals(p.pergunta))
+                    if(r.equalsIgnoreCase(p.getPergunta()))
                         pontos+= p.contas();
                 }
             }
@@ -243,5 +256,7 @@ public class Jogo {
 
         return pontos;
     }
+
+
 
 }

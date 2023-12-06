@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Ski extends Desporto{
-    protected ArrayList<String> respostas;
+    protected ArrayList respostas;
     protected String respostaCerta;
 
 
@@ -28,33 +28,29 @@ public class Ski extends Desporto{
         return respostas;
     }
 
-    public String getespostaCerta() {return respostaCerta; }
+    public String getRespostaCerta() {return respostaCerta; }
 
 
 
     //Metodos
+
     @Override
-    public ArrayList getEasyAnswer(){
-        Collections.shuffle(respostas);
-        return respostas;
-    }
-    @Override
-    public int respostaAte3(){
-        Collections.shuffle(respostas);
+    public int questionario(int jogada){
+        Collections.shuffle(getRespostas());
         Scanner sc = new Scanner(System.in);
-        for(int i=0;i< respostas.size();i++){
+        for(int i=0;i< getRespostas().size();i++){
             // System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-            System.out.println(i+"-->"+respostas.get(i));
+            System.out.println(i+"-->"+getRespostas().get(i));
             System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
         int x = sc.nextInt();
 
-        if(x>=respostas.size()){
+        if(x>=getRespostas().size()){
             System.out.println("+++++++RESPOSTA INVALIDA++++++");
-            return respostaAte3();
+            return questionario(jogada);
         }
         else{
-            if(respostas.get(x).equals(respostaCerta)){
+            if(getRespostas().get(x).equals(getRespostaCerta())){
                 System.out.println("ACERTOU------ " +contas()+ " pontos");
                 return 1;
             }
@@ -65,23 +61,26 @@ public class Ski extends Desporto{
         }
 
     }
-    @Override
-    public ArrayList getHardAnswer(){
 
-        return getEasyAnswer();
-    }
     @Override
-    public int perguntaDificil(){
-        return  respostaAte3();
+    public ArrayList getAnswers(int jogada){
+        Collections.shuffle(getRespostas());
+        return(getRespostas());
+    }
+
+    @Override
+    public boolean checkAnswer(String respostaSelecionada,int jogada){
+        if(getRespostas().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta())){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
     public int contas() {
         int pontos=super.valorBase+super.majoracao*getMajoracaoD();
         return pontos;
-    }
-    @Override
-    public String respostaCerta(int jogada) {
-        return getespostaCerta();
     }
 }

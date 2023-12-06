@@ -20,17 +20,12 @@ public class Desporto extends Pergunta {
 
 
     //Metodos
-    @Override
-    public ArrayList getEasyAnswer(){return null;}
-    @Override
-    public int respostaAte3(){ return 3; }
-    @Override
-    public ArrayList getHardAnswer(){
-        return null;
-    }
-    @Override
-    public int perguntaDificil(){ return 3; }
+
+    public boolean checkAnswer(String respostaSelecionada,int jogada){return false;}
 
     @Override
-    public String respostaCerta(int jogada){ return null; }
+    public int questionario(int jogada){ return 3; }
+
+    @Override
+    public ArrayList getAnswers(int jogada){return null;}
 }

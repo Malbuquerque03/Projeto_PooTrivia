@@ -8,11 +8,11 @@ public class Jogador {
     String data;
     protected String nome;
 
-    protected ArrayList erradas;
-    protected ArrayList certas;
+    protected ArrayList<String> erradas;
+    protected ArrayList<String> certas;
     protected String nomeFile;
 
-    public Jogador( String nome,ArrayList erradas,ArrayList certas ) {
+    public Jogador( String nome,ArrayList<String> erradas,ArrayList<String> certas ) {
         setData();
         this.nome = nome;
         this.erradas=erradas;
@@ -37,9 +37,9 @@ public class Jogador {
         this.nome = nome;
     }
 
-    public void setErradas(ArrayList erradas) { this.erradas = erradas; }
+    public void setErradas(ArrayList<String> erradas) { this.erradas = erradas; }
 
-    public void setCertas(ArrayList certas) { this.certas = certas; }
+    public void setCertas(ArrayList<String> certas) { this.certas = certas; }
 
     public void setNomeFile(String nomeFile) { this.nomeFile = nomeFile; }
 
@@ -52,9 +52,11 @@ public class Jogador {
         return nome;
     }
 
-    public ArrayList getErradas() { return erradas; }
+    public ArrayList<String> getErradas() {
+        return erradas;
+    }
 
-    public ArrayList getCertas() {
+    public ArrayList<String> getCertas() {
         return certas;
     }
 

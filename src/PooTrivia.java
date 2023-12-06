@@ -16,9 +16,10 @@ public class PooTrivia {
         GereFicheiro fich = new GereFicheiro();
         fich.readTextFile(new File("perguntas_poo.csv"), perguntas, respostas);
         Jogo jogo=new Jogo();
-        //jogo.menu(perguntas,jogadores);
+        jogo.menu(perguntas,jogadores);
 
-        GereGUI frame = new GereGUI(perguntas);
+        /*
+        GereGUI frame = new GereGUI(perguntas,tdsrespostas,respostasCertas,respostasErradas);
 
         frame.setTitle("POO Trivia");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,6 +30,8 @@ public class PooTrivia {
         frame.setLocationRelativeTo(null);
 
         frame.setVisible(true);
+
+         */
 
     }
 

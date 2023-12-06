@@ -42,13 +42,11 @@ public class Pergunta {
 
     //Metodos
 
-    public ArrayList getEasyAnswer(){return null;}
-    public ArrayList getHardAnswer(){return null;}
+    public boolean checkAnswer(String respostaSelecionada,int jogada){return false;}
 
-    public int respostaAte3(){ return 2; }
+    public int questionario(int jogada){ return 2; }
 
-    public int perguntaDificil(){ return 2; }
+    public ArrayList getAnswers(int jogada){return null;}
 
     public int contas(){ return 2; }
-    public String respostaCerta(int jogador){ return null; }
 }

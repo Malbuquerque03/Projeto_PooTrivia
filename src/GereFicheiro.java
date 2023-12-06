@@ -100,12 +100,17 @@ public class GereFicheiro {
 
 
 
-    public void readFicheiroObjetos(Jogador e, File fo, int aux, ArrayList<Jogador> jogadores) {
+
+    public void readFicheiroObjetos(Jogador j, File fo, int aux, ArrayList<Jogador> jogadores) {
 
         try {
+
             FileInputStream fis = new FileInputStream(fo);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            e = (Jogador) ois.readObject();
+            j = (Jogador) ois.readObject();
+            if(aux ==1){
+                adicionaJogador(j, jogadores);
+            }
             ois.close();
         } catch (FileNotFoundException ex) {
             System.out.println("Erro a abrir ficheiro de objetos.");
@@ -115,8 +120,6 @@ public class GereFicheiro {
             System.out.println("Erro a converter objeto.");
         }
     }
-
-
     private String[] separaRespostas(String td, String a){     //metodo de separacao
         String[] respostas= td.split(a);
         return respostas;
