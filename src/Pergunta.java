@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pergunta {
+public class Pergunta implements Serializable {
     protected int valorBase;
     protected String pergunta;
 

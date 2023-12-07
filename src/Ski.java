@@ -3,18 +3,18 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Ski extends Desporto{
-    protected ArrayList respostas;
+    protected ArrayList<String> respostas;
     protected String respostaCerta;
 
 
-    public Ski(String pergunta, ArrayList respostas, String respostaCerta) {
+    public Ski(String pergunta, ArrayList<String> respostas, String respostaCerta) {
         super(pergunta, 2);
         this.respostas = respostas;
         this.respostaCerta = respostaCerta;
     }
 
     //Setters
-    public void setRespostas(ArrayList respostas) {
+    public void setRespostas(ArrayList<String> respostas) {
         this.respostas = respostas;
     }
 
@@ -24,7 +24,7 @@ public class Ski extends Desporto{
 
 
     //Getters
-    public ArrayList getRespostas() {
+    public ArrayList<String> getRespostas() {
         return respostas;
     }
 
@@ -63,7 +63,7 @@ public class Ski extends Desporto{
     }
 
     @Override
-    public ArrayList getAnswers(int jogada){
+    public ArrayList<String> getAnswers(int jogada){
         Collections.shuffle(getRespostas());
         return(getRespostas());
     }

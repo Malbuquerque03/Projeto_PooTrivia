@@ -3,11 +3,11 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Natacao extends Desporto{
-    protected ArrayList respostas;
+    protected ArrayList<String> respostas;
     protected String respostaCerta;
 
 
-    public Natacao(String pergunta, ArrayList respostas,String respostaCerta) {
+    public Natacao(String pergunta, ArrayList<String> respostas,String respostaCerta) {
         super(pergunta,10);
         this.respostas=respostas;
         this.respostaCerta = respostaCerta;
@@ -20,7 +20,7 @@ public class Natacao extends Desporto{
         this.respostaCerta = respostaCerta;
     }
 
-    public void setRespostas(ArrayList respostas) {
+    public void setRespostas(ArrayList<String> respostas) {
         this.respostas = respostas;
     }
 
@@ -64,7 +64,7 @@ public class Natacao extends Desporto{
 
     }
     @Override
-    public ArrayList getAnswers(int jogada){
+    public ArrayList<String> getAnswers(int jogada){
         Collections.shuffle(getRespostas());
         return(getRespostas());
     }

@@ -2,17 +2,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class Jogador {
+public class Jogador implements Serializable {
 
-    // Get the current date and time
     String data;
     protected String nome;
 
-    protected ArrayList<String> erradas;
-    protected ArrayList<String> certas;
+    protected ArrayList<Pergunta> erradas;
+    protected ArrayList<Pergunta> certas;
     protected String nomeFile;
 
-    public Jogador( String nome,ArrayList<String> erradas,ArrayList<String> certas ) {
+    public Jogador( String nome,ArrayList<Pergunta> erradas,ArrayList<Pergunta> certas ) {
         setData();
         this.nome = nome;
         this.erradas=erradas;
@@ -37,9 +36,9 @@ public class Jogador {
         this.nome = nome;
     }
 
-    public void setErradas(ArrayList<String> erradas) { this.erradas = erradas; }
+    public void setErradas(ArrayList<Pergunta> erradas) { this.erradas = erradas; }
 
-    public void setCertas(ArrayList<String> certas) { this.certas = certas; }
+    public void setCertas(ArrayList<Pergunta> certas) { this.certas = certas; }
 
     public void setNomeFile(String nomeFile) { this.nomeFile = nomeFile; }
 
@@ -52,11 +51,11 @@ public class Jogador {
         return nome;
     }
 
-    public ArrayList<String> getErradas() {
+    public ArrayList<Pergunta> getErradas() {
         return erradas;
     }
 
-    public ArrayList<String> getCertas() {
+    public ArrayList<Pergunta> getCertas() {
         return certas;
     }
 

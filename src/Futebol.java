@@ -3,11 +3,11 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Futebol extends Desporto{
-    protected ArrayList respostasFacil;
-    protected ArrayList respostasDificil;
+    protected ArrayList<String> respostasFacil;
+    protected ArrayList<String> respostasDificil;
     protected String[] respostaCerta;
 
-    public Futebol(String pergunta,  ArrayList respostasFacil, ArrayList respostasDificil, String[] respostaCerta) {
+    public Futebol(String pergunta,  ArrayList<String> respostasFacil, ArrayList<String> respostasDificil, String[] respostaCerta) {
         super(pergunta,1);
         this.respostasFacil = respostasFacil;
         this.respostasDificil = respostasDificil;
@@ -18,11 +18,11 @@ public class Futebol extends Desporto{
 
 
     //Setters
-    public void setRespostasFacil(ArrayList respostasFacil) {
+    public void setRespostasFacil(ArrayList<String> respostasFacil) {
         this.respostasFacil = respostasFacil;
     }
 
-    public void setRespostasDificil(ArrayList respostasDificil) {
+    public void setRespostasDificil(ArrayList<String> respostasDificil) {
         this.respostasDificil = respostasDificil;
     }
 
@@ -32,11 +32,9 @@ public class Futebol extends Desporto{
 
     //Getters
 
-    public ArrayList getRespostasFacil() {
-        return respostasFacil;
-    }
+    public ArrayList<String> getRespostasFacil() { return respostasFacil; }
 
-    public ArrayList getRespostasDificil() {
+    public ArrayList<String> getRespostasDificil() {
         return respostasDificil;
     }
 
@@ -106,7 +104,7 @@ public class Futebol extends Desporto{
     }
 
     @Override
-    public ArrayList getAnswers(int jogada){
+    public ArrayList<String> getAnswers(int jogada){
         if(jogada<3){
             Collections.shuffle(getRespostasFacil());
             return getRespostasFacil();

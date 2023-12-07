@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class Jogo {
 
-    ArrayList<String> respostasCertas =new ArrayList<>() ;
-    ArrayList<String> respostasErradas =new ArrayList<>() ;
-    ArrayList<Integer> tdsrespostas1 =new ArrayList<>() ;
+    ArrayList<Pergunta> respostasCertas =new ArrayList<>() ;
+    ArrayList<Pergunta> respostasErradas =new ArrayList<>() ;
+    ArrayList<Integer> tdsrespostas =new ArrayList<>() ;
 
     GereFicheiro f = new GereFicheiro();
     Scanner sc = new Scanner(System.in);
@@ -22,7 +22,7 @@ public class Jogo {
             System.out.println("\t\t\tVAMOS JOGAR??(S/N)");
             response = sc.nextLine();
             if (response.equalsIgnoreCase("sim") || response.equalsIgnoreCase("s")){
-                tdsrespostas1.clear();
+                tdsrespostas.clear();
                 respostasCertas.clear();
                 respostasErradas.clear();
                 lig(perguntas,jogadores);
@@ -49,25 +49,20 @@ public class Jogo {
         return null;
     }
     public ArrayList fazResposta(ArrayList<Pergunta> perguntas, int jogada, int index){
-        return perguntas.get(index).getAnswers(jogada);
+            return perguntas.get(index).getAnswers(jogada);
     }
-
     public boolean checksAnswer(ArrayList<Pergunta> perguntas, int jogada, int index,String respostaSelecionada,ArrayList<String> respostasCertas,ArrayList<String> respostasErradas){
         boolean resultado;
 
             resultado = perguntas.get(index).checkAnswer(respostaSelecionada,jogada);
-            if(resultado==true){
+            if(resultado){
                 resultadoELugar= perguntas.get(index).pergunta;
                 respostasCertas.add(resultadoELugar);
             }
-            else if(resultado==false) {
+            else  {
                 resultadoELugar = perguntas.get(index).pergunta;
                 respostasErradas.add(resultadoELugar);
             }
-            else{
-                System.out.println("ERRO ERRO");
-            }
-
 
         return resultado;
     }
@@ -78,31 +73,35 @@ public class Jogo {
 
         while(jogada<=5){
 
-            int index = verificacao(perguntas,tdsrespostas1);
+            int index = verificacao(perguntas,tdsrespostas);
             System.out.println("\t\t\tPERGUNTA "+jogada +":\n"+ perguntas.get(index).pergunta);
 
-            System.out.println("\t\t\tOPÇÕES:");
-            resultado= perguntas.get(index).questionario(jogada);
-            verSeECorreta(resultado,index,perguntas);
+            System.out.println("\t\t\tOPÇÕES:\n");
+
+                resultado= perguntas.get(index).questionario(jogada);
+                verSeECorreta(resultado,index,perguntas);
 
 
             jogada++;
         }
         System.out.println("\n+++++++++++++++++++++++++++++FIM DO JOGO+++++++++++++++++++++++++++++");
-        int pontos= pontuacao(perguntas,jogadores,null);
-        System.out.println("-->Pontuação: "+ pontos);
         System.out.print("-->Nome: ");
         String nome= sc.nextLine();
+        Jogador j= new Jogador(nome,respostasErradas,respostasCertas);
+        int pontos= pontuacao(perguntas,j);
+
+        System.out.println("-->Pontuação: "+ pontos);
+
         System.out.println("-->Certas: ");
-        for(String r:respostasCertas){
-            System.out.println("\t\t->"+r);
+        for(Pergunta r:respostasCertas){
+            System.out.println("\t\t->"+r.getPergunta());
         }
         System.out.println("-->Erradas: ");
-        for(String r:respostasErradas){
-            System.out.println("\t\t->"+r);
+        for(Pergunta r:respostasErradas){
+            System.out.println("\t\t->"+r.getPergunta());
         }
 
-        Jogador j= new Jogador(nome,respostasErradas,respostasCertas);
+       
         System.out.println("-->Data: "+ j.data);
         File filename = new File(j.getNomeFile());
         f.writeFicheiroObjetos(j,filename);
@@ -114,6 +113,7 @@ public class Jogo {
                 System.out.println(jog.nome);
                 System.out.println(jog.data);
                 System.out.println(jog.nomeFile);
+                System.out.println(pontuacao(perguntas,jog));
                 System.out.println("----------------------------");
             }
         }
@@ -126,12 +126,12 @@ public class Jogo {
 
     private void verSeECorreta(int resultado,int index,ArrayList<Pergunta> perguntas){
         if(resultado==1){
-            respostasCertas.add(perguntas.get(index).getPergunta());
-            tdsrespostas1.add(index);
+            respostasCertas.add(perguntas.get(index));
+            tdsrespostas.add(index);
         }
         else if(resultado==0){
-            respostasErradas.add(perguntas.get(index).getPergunta());
-            tdsrespostas1.add(index);
+            respostasErradas.add(perguntas.get(index));
+            tdsrespostas.add(index);
         }
         else{
             System.out.println("ERRO ERRO");
@@ -167,16 +167,12 @@ public class Jogo {
 
             // Check if any files are found
             if (files != null) {
-                int count =0;
                 // Print the names of the files
                 for (File file : files) {
-
                     // GereFicheiro gg= new GereFicheiro();
                     if(file.getName().endsWith(".dat")){
-
                         File fn = new File(file.getName());
                         f.readFicheiroObjetos(j,fn,1,jogadores);
-                        System.out.println(fn.getName());
                     }
 
                 }
@@ -196,7 +192,7 @@ public class Jogo {
             while (!sorted) { // enquanto n tiver ordenado vai continuar
                 sorted = true;
                 for (int i = 0; i < jogadores.size() - 1; i++) {
-                    if (pontuacao(perguntas, jogadores, jogadores.get(i)) > pontuacao(perguntas, jogadores, jogadores.get(i + 1))) { // se a pontuacao da esquerda for maior q a da direita troca
+                    if (pontuacao(perguntas, jogadores.get(i)) > pontuacao(perguntas, jogadores.get(i + 1))) { // se a pontuacao da esquerda for maior q a da direita troca
                         max = jogadores.get(i);
                         jogadores.set(i, jogadores.get(i + 1));
                         jogadores.set(i + 1, max); // trocas
@@ -233,15 +229,15 @@ public class Jogo {
 
     }
 
-    private int pontuacao(ArrayList<Pergunta> perguntas,ArrayList<Jogador> jogadores, Jogador j){
+    private int pontuacao(ArrayList<Pergunta> perguntas, Jogador j){
         int pontos=0;
-
-            for(String r: respostasCertas){
+            for(Pergunta r: j.getCertas()){
                 for(Pergunta p:perguntas){
-                    if(r.equalsIgnoreCase(p.getPergunta()))
+                    if(r.getPergunta().equalsIgnoreCase(p.getPergunta()))
                         pontos+= p.contas();
                 }
             }
+
 
 
         return pontos;

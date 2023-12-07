@@ -3,12 +3,12 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Ciencia extends Pergunta{
-    protected ArrayList respostasFacil;
-    protected ArrayList respostasDificil;
+    protected ArrayList<String> respostasFacil;
+    protected ArrayList<String> respostasDificil;
     protected String respostaCerta;
 
 
-    public Ciencia(String pergunta, ArrayList respostasFacil, ArrayList respostasDificil, String respostaCerta) {
+    public Ciencia(String pergunta, ArrayList<String> respostasFacil, ArrayList<String> respostasDificil, String respostaCerta) {
         super(pergunta,5);
         this.respostasFacil = respostasFacil;
         this.respostasDificil = respostasDificil;
@@ -17,11 +17,11 @@ public class Ciencia extends Pergunta{
 
 
     //Setters
-    public void setRespostasFacil(ArrayList respostasFacil) {
+    public void setRespostasFacil(ArrayList<String> respostasFacil) {
         this.respostasFacil = respostasFacil;
     }
 
-    public void setRespostasDificil(ArrayList respostasDificil) {
+    public void setRespostasDificil(ArrayList<String> respostasDificil) {
         this.respostasDificil = respostasDificil;
     }
 
@@ -30,11 +30,11 @@ public class Ciencia extends Pergunta{
     }
 
     //Getters
-    public ArrayList getRespostasFacil() {
+    public ArrayList<String> getRespostasFacil() {
         return respostasFacil;
     }
 
-    public ArrayList getRespostasDificil() {
+    public ArrayList<String> getRespostasDificil() {
         return respostasDificil;
     }
 
@@ -102,7 +102,7 @@ public class Ciencia extends Pergunta{
 
     
     @Override
-    public ArrayList getAnswers(int jogada){
+    public ArrayList<String> getAnswers(int jogada){
         if(jogada<3){
             Collections.shuffle(getRespostasFacil());
             return getRespostasFacil();

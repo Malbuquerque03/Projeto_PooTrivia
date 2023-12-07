@@ -14,7 +14,7 @@ public class PooTrivia {
         ArrayList<Pergunta> perguntas = new ArrayList<>();
         ArrayList<String> respostas = new ArrayList<>();
         GereFicheiro fich = new GereFicheiro();
-        fich.readTextFile(new File("perguntas_poo.csv"), perguntas, respostas);
+        fich.readTextFile(new File("perguntas_poo.csv"), perguntas);
         Jogo jogo=new Jogo();
         jogo.menu(perguntas,jogadores);
 
