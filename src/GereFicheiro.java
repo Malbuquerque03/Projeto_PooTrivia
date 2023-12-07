@@ -101,16 +101,16 @@ public class GereFicheiro {
 
 
 
-    public void readFicheiroObjetos(Jogador j, File fo, int aux, ArrayList<Jogador> jogadores) {
+    public void readFicheiroObjetos(Jogador j, File fo, ArrayList<Jogador> jogadores) {
 
         try {
 
             FileInputStream fis = new FileInputStream(fo);
             ObjectInputStream ois = new ObjectInputStream(fis);
             j = (Jogador) ois.readObject();
-            if(aux ==1){
+
                 adicionaJogador(j, jogadores);
-            }
+
             ois.close();
         } catch (FileNotFoundException ex) {
             System.out.println("Erro a abrir ficheiro de objetos.");

@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
         private int aux;
 
         Jogo jogo=new Jogo();
-        public GereGUI(ArrayList<Pergunta> perguntas,ArrayList<Integer> tdsrespostas,ArrayList<String> respostasCertas,ArrayList<String> respostasErradas) {
+        public GereGUI(ArrayList<Pergunta> perguntas,ArrayList<Integer> tdsrespostas,ArrayList<Pergunta> respostasCertas,ArrayList<Pergunta> respostasErradas) {
 
             // Adiciona margens à janela
             int marginSize = 100;
@@ -97,7 +97,7 @@ import java.awt.event.ActionListener;
             return buttonPanel;
         }
 
-        private JPanel createQuestionPanel(int index,int jogada,Jogo jogo,ArrayList<Pergunta> perguntas,ArrayList respostas,ArrayList<String> respostasCertas,ArrayList<String> respostasErradas ) {
+        private JPanel createQuestionPanel(int index,int jogada,Jogo jogo,ArrayList<Pergunta> perguntas,ArrayList respostas,ArrayList<Pergunta> respostasCertas,ArrayList<Pergunta> respostasErradas ) {
             //Define o painel da pergunta
             JPanel questionPanel = new JPanel(new BorderLayout());
             String perguntaTexto = jogo.fazPergunta(perguntas,jogada,index);
@@ -136,7 +136,7 @@ import java.awt.event.ActionListener;
             return questionPanel;
         }
 
-        private boolean verificarResposta(JButton button, ArrayList<Pergunta> perguntas, int jogada, int index,ArrayList<String> respostasCertas,ArrayList<String> respostasErradas) {
+        private boolean verificarResposta(JButton button, ArrayList<Pergunta> perguntas, int jogada, int index,ArrayList<Pergunta> respostasCertas,ArrayList<Pergunta> respostasErradas) {
             aux=0;
             String respostaSelecionada = button.getText();
             return jogo.checksAnswer(perguntas, jogada, index, respostaSelecionada,respostasCertas,respostasErradas);

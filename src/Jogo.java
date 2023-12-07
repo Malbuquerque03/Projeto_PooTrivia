@@ -51,17 +51,15 @@ public class Jogo {
     public ArrayList fazResposta(ArrayList<Pergunta> perguntas, int jogada, int index){
             return perguntas.get(index).getAnswers(jogada);
     }
-    public boolean checksAnswer(ArrayList<Pergunta> perguntas, int jogada, int index,String respostaSelecionada,ArrayList<String> respostasCertas,ArrayList<String> respostasErradas){
+    public boolean checksAnswer(ArrayList<Pergunta> perguntas, int jogada, int index,String respostaSelecionada,ArrayList<Pergunta> respostasCertas,ArrayList<Pergunta> respostasErradas){
         boolean resultado;
 
             resultado = perguntas.get(index).checkAnswer(respostaSelecionada,jogada);
             if(resultado){
-                resultadoELugar= perguntas.get(index).pergunta;
-                respostasCertas.add(resultadoELugar);
+                respostasCertas.add(perguntas.get(index));
             }
             else  {
-                resultadoELugar = perguntas.get(index).pergunta;
-                respostasErradas.add(resultadoELugar);
+                respostasErradas.add(perguntas.get(index));
             }
 
         return resultado;
@@ -88,16 +86,16 @@ public class Jogo {
         System.out.print("-->Nome: ");
         String nome= sc.nextLine();
         Jogador j= new Jogador(nome,respostasErradas,respostasCertas);
-        int pontos= pontuacao(perguntas,j);
+        int pontos= pontuacao(j);
 
         System.out.println("-->Pontuação: "+ pontos);
 
         System.out.println("-->Certas: ");
-        for(Pergunta r:respostasCertas){
+        for(Pergunta r: j.getCertas()){
             System.out.println("\t\t->"+r.getPergunta());
         }
         System.out.println("-->Erradas: ");
-        for(Pergunta r:respostasErradas){
+        for(Pergunta r: j.getErradas()){
             System.out.println("\t\t->"+r.getPergunta());
         }
 
@@ -105,7 +103,6 @@ public class Jogo {
         System.out.println("-->Data: "+ j.data);
         File filename = new File(j.getNomeFile());
         f.writeFicheiroObjetos(j,filename);
-        f.readFicheiroObjetos(j, filename,0,jogadores);
         listFilesExample(j,jogadores);
         if(!jogadores.isEmpty()){
             for(Jogador jog : jogadores){
@@ -113,7 +110,11 @@ public class Jogo {
                 System.out.println(jog.nome);
                 System.out.println(jog.data);
                 System.out.println(jog.nomeFile);
-                System.out.println(pontuacao(perguntas,jog));
+                for(Pergunta p: jog.getCertas()){
+                    System.out.println(p.getPergunta());
+                }
+
+                System.out.println(pontuacao(jog));
                 System.out.println("----------------------------");
             }
         }
@@ -172,7 +173,7 @@ public class Jogo {
                     // GereFicheiro gg= new GereFicheiro();
                     if(file.getName().endsWith(".dat")){
                         File fn = new File(file.getName());
-                        f.readFicheiroObjetos(j,fn,1,jogadores);
+                        f.readFicheiroObjetos(j,fn,jogadores);
                     }
 
                 }
@@ -192,7 +193,7 @@ public class Jogo {
             while (!sorted) { // enquanto n tiver ordenado vai continuar
                 sorted = true;
                 for (int i = 0; i < jogadores.size() - 1; i++) {
-                    if (pontuacao(perguntas, jogadores.get(i)) > pontuacao(perguntas, jogadores.get(i + 1))) { // se a pontuacao da esquerda for maior q a da direita troca
+                    if (pontuacao(jogadores.get(i)) > pontuacao(jogadores.get(i + 1))) { // se a pontuacao da esquerda for maior q a da direita troca
                         max = jogadores.get(i);
                         jogadores.set(i, jogadores.get(i + 1));
                         jogadores.set(i + 1, max); // trocas
@@ -229,16 +230,13 @@ public class Jogo {
 
     }
 
-    private int pontuacao(ArrayList<Pergunta> perguntas, Jogador j){
+    private int pontuacao(Jogador j){
         int pontos=0;
+        System.out.println("DENTRO DO METODO DA PONTUAÇÂO\n AS CERTA-->");
             for(Pergunta r: j.getCertas()){
-                for(Pergunta p:perguntas){
-                    if(r.getPergunta().equalsIgnoreCase(p.getPergunta()))
-                        pontos+= p.contas();
-                }
+                System.out.println(r.getPergunta());
+                pontos += r.contas();
             }
-
-
 
         return pontos;
     }

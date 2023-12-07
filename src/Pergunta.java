@@ -7,10 +7,6 @@ public class Pergunta implements Serializable {
 
     protected int majoracao;
 
-    public Pergunta(String pergunta) {
-        setValorBase();
-        this.pergunta = pergunta;
-    }
 
     public Pergunta( String pergunta, int majoracao) {
         setValorBase();
