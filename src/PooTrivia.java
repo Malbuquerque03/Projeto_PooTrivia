@@ -13,17 +13,20 @@ public class PooTrivia {
         ArrayList<Jogador> jogadores= new ArrayList<>();
         ArrayList<Pergunta> perguntas = new ArrayList<>();
         ArrayList<String> respostas = new ArrayList<>();
+        ArrayList<Integer> tdsrespostas =new ArrayList<>() ;
+        ArrayList<Pergunta> respostasCertas =new ArrayList<>() ;
+        ArrayList<Pergunta> respostasErradas =new ArrayList<>() ;
         GereFicheiro fich = new GereFicheiro();
         fich.readTextFile(new File("perguntas_poo.csv"), perguntas);
         Jogo jogo=new Jogo();
         jogo.menu(perguntas,jogadores);
 
-        /*
-        GereGUI frame = new GereGUI(perguntas,tdsrespostas,respostasCertas,respostasErradas);
+
+        GereGUI frame = new GereGUI(perguntas,respostasCertas,respostasErradas,jogadores);
 
         frame.setTitle("POO Trivia");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 900);
+        frame.setSize(1250, 1000);
         // Impede que o utilizador redimensione a janela
         frame.setResizable(false);
         // Centraliza a janela no ecrã
@@ -31,7 +34,7 @@ public class PooTrivia {
 
         frame.setVisible(true);
 
-         */
+
 
     }
 

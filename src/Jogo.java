@@ -8,12 +8,10 @@ public class Jogo {
 
     ArrayList<Pergunta> respostasCertas =new ArrayList<>() ;
     ArrayList<Pergunta> respostasErradas =new ArrayList<>() ;
-    ArrayList<Integer> tdsrespostas =new ArrayList<>() ;
 
     GereFicheiro f = new GereFicheiro();
     Scanner sc = new Scanner(System.in);
 
-    String resultadoELugar;
 
     public void menu(ArrayList<Pergunta> perguntas, ArrayList<Jogador> jogadores){
         Scanner sc = new Scanner(System.in);
@@ -22,7 +20,6 @@ public class Jogo {
             System.out.println("\t\t\tVAMOS JOGAR??(S/N)");
             response = sc.nextLine();
             if (response.equalsIgnoreCase("sim") || response.equalsIgnoreCase("s")){
-                tdsrespostas.clear();
                 respostasCertas.clear();
                 respostasErradas.clear();
                 lig(perguntas,jogadores);
@@ -71,7 +68,7 @@ public class Jogo {
 
         while(jogada<=5){
 
-            int index = verificacao(perguntas,tdsrespostas);
+            int index = verificacao(perguntas);
             System.out.println("\t\t\tPERGUNTA "+jogada +":\n"+ perguntas.get(index).pergunta);
 
             System.out.println("\t\t\tOPÇÕES:\n");
@@ -99,10 +96,10 @@ public class Jogo {
             System.out.println("\t\t->"+r.getPergunta());
         }
 
-       
+
         System.out.println("-->Data: "+ j.data);
         File filename = new File(j.getNomeFile());
-        f.writeFicheiroObjetos(j,filename);
+        saveData(j);
         listFilesExample(j,jogadores);
         if(!jogadores.isEmpty()){
             for(Jogador jog : jogadores){
@@ -119,7 +116,7 @@ public class Jogo {
             }
         }
 
-        top3(jogadores,perguntas);
+        top3(jogadores);
 
         System.out.println("\n+++++++++++++++++++++++++++++++++DONE+++++++++++++++++++++++++++++++++");
 
@@ -128,11 +125,9 @@ public class Jogo {
     private void verSeECorreta(int resultado,int index,ArrayList<Pergunta> perguntas){
         if(resultado==1){
             respostasCertas.add(perguntas.get(index));
-            tdsrespostas.add(index);
         }
         else if(resultado==0){
             respostasErradas.add(perguntas.get(index));
-            tdsrespostas.add(index);
         }
         else{
             System.out.println("ERRO ERRO");
@@ -141,10 +136,10 @@ public class Jogo {
 
 
 
-    public int verificacao(ArrayList<Pergunta> perguntas,ArrayList<Integer> tdsrespostas) {
+    public int verificacao(ArrayList<Pergunta> perguntas) {
         int index = (int) (Math.random() * perguntas.size());
-        if (tdsrespostas.contains(index)) {
-            return verificacao(perguntas,tdsrespostas);
+        if (respostasCertas.contains(perguntas.get(index))||respostasErradas.contains(perguntas.get(index))) {
+            return verificacao(perguntas);
         } else {
             return index;
         }
@@ -186,21 +181,9 @@ public class Jogo {
 
     }
 
-    private void top3(ArrayList<Jogador> jogadores, ArrayList<Pergunta> perguntas){
+    private void top3(ArrayList<Jogador> jogadores){
         if(jogadores.size()>0) {
-            Jogador max;
-            boolean sorted = false;
-            while (!sorted) { // enquanto n tiver ordenado vai continuar
-                sorted = true;
-                for (int i = 0; i < jogadores.size() - 1; i++) {
-                    if (pontuacao(jogadores.get(i)) > pontuacao(jogadores.get(i + 1))) { // se a pontuacao da esquerda for maior q a da direita troca
-                        max = jogadores.get(i);
-                        jogadores.set(i, jogadores.get(i + 1));
-                        jogadores.set(i + 1, max); // trocas
-                        sorted = false; //ainda n sabemos se ta ordenado ou n
-                    }
-                }
-            }
+           jogadores= ordenajogadores(jogadores);
 
             if (jogadores.size() < 4){
                 if(jogadores.size()==1)
@@ -229,12 +212,54 @@ public class Jogo {
         }
 
     }
+    public ArrayList<String> getTop3(ArrayList<Jogador> jogadores){
+        ArrayList<String> top3 = new ArrayList<>();
+        if(jogadores.size()>0) {
+            jogadores = ordenajogadores(jogadores);
 
-    private int pontuacao(Jogador j){
+            if (jogadores.size() < 4){
+                if(jogadores.size()==1)
+                    top3.add("<html><div style='text-align: center;'>" +"<h1>********LUGAR Nº 1 ********</h1>"+ "<li>NOME-->" + jogadores.get(0).getNome()+"</li>"+"<li>DATA--> " + jogadores.get(0).getData()+"</li>"+"<li>FICHEIRO--> " + jogadores.get(0).getNomeFile()+"</li>"+"</ul></div></html>");
+                else{
+                    for (int i = 1; i <= jogadores.size(); i++) {
+                        top3.add("<html><div style='text-align: center;'>" +"<h1>********LUGAR Nº  " + i + " ********</h1>"+ "<li>NOME-->" + jogadores.get(i - 1).getNome()+"</li>"+"<li>DATA--> " + jogadores.get(i - 1).getData()+"</li>"+"<li>FICHEIRO--> " + jogadores.get(i - 1).getNomeFile()+"</li>"+"</ul></div></html>");
+                    }
+                }
+
+            }
+
+            else{
+                for (int i = 1; i <= 3; i++) {
+                    top3.add("<html><div style='text-align: center;'>" +"<h1>********LUGAR Nº  " + i + " ********</h1>"+ "<li>NOME-->" + jogadores.get(i - 1).getNome()+"</li>"+"<li>DATA--> " + jogadores.get(i - 1).getData()+"</li>"+"<li>FICHEIRO--> " + jogadores.get(i - 1).getNomeFile()+"</li>"+"</ul></div></html>");
+
+                }
+            }
+
+        }
+        return top3;
+    }
+
+    private ArrayList<Jogador> ordenajogadores(ArrayList<Jogador> jogadores){
+        Jogador max;
+        boolean sorted = false;
+        while (!sorted) { // enquanto n tiver ordenado vai continuar
+            sorted = true;
+            for (int i = 0; i < jogadores.size() - 1; i++) {
+                if (pontuacao(jogadores.get(i)) < pontuacao(jogadores.get(i + 1))) { // se a pontuacao da esquerda for menor q a da direita troca
+                    max = jogadores.get(i);
+                    jogadores.set(i, jogadores.get(i + 1));
+                    jogadores.set(i + 1, max); // trocas
+                    sorted = false; //ainda n sabemos se ta ordenado ou n
+                }
+            }
+        }
+
+        return jogadores;
+    }
+
+    public int pontuacao(Jogador j){
         int pontos=0;
-        System.out.println("DENTRO DO METODO DA PONTUAÇÂO\n AS CERTA-->");
             for(Pergunta r: j.getCertas()){
-                System.out.println(r.getPergunta());
                 pontos += r.contas();
             }
 
@@ -242,5 +267,10 @@ public class Jogo {
     }
 
 
+    public void saveData(Jogador j){
+        File filename = new File(j.getNomeFile());
+        f.writeFicheiroObjetos(j,filename);
+       // listFilesExample(j,jogadores);
+    }
 
 }
