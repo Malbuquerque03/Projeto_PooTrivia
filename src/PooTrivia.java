@@ -12,8 +12,6 @@ public class PooTrivia {
 
         ArrayList<Jogador> jogadores= new ArrayList<>();
         ArrayList<Pergunta> perguntas = new ArrayList<>();
-        ArrayList<String> respostas = new ArrayList<>();
-        ArrayList<Integer> tdsrespostas =new ArrayList<>() ;
         ArrayList<Pergunta> respostasCertas =new ArrayList<>() ;
         ArrayList<Pergunta> respostasErradas =new ArrayList<>() ;
         GereFicheiro fich = new GereFicheiro();
