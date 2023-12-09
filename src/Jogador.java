@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class Jogador implements Serializable {
 
-    protected String data;
-    protected String nome;
+    private String data;
+    private String nome;
 
-    protected ArrayList<Pergunta> erradas;
-    protected ArrayList<Pergunta> certas;
-    protected String nomeFile;
+    private ArrayList<Pergunta> erradas;
+    private ArrayList<Pergunta> certas;
+    private String nomeFile;
 
     public Jogador( String nome,ArrayList<Pergunta> erradas,ArrayList<Pergunta> certas , String data) {
         this.data = data;

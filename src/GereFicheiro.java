@@ -101,7 +101,7 @@ public class GereFicheiro {
 
 
 
-    public void readFicheiroObjetos(Jogador j, File fo, ArrayList<Jogador> jogadores) {
+    public void readFicheiroObjetos(File fo, ArrayList<Jogador> jogadores) {
 
         try {
             FileInputStream fis = new FileInputStream(fo);
@@ -119,9 +119,9 @@ public class GereFicheiro {
             System.out.println("Erro a converter objeto.");
         }
     }
+
     private String[] separaRespostas(String td, String a){     //metodo de separacao
-        String[] respostas= td.split(a);
-        return respostas;
+        return td.split(a);
     }
     private String[][] separa2Respostas(String[] respostas, String a){     //metodo de separacao
         String[][] separadinho = new String[respostas.length][];
@@ -149,8 +149,7 @@ public class GereFicheiro {
             respostas[i]=separado[j][i+1];
         }
 
-        String[][] facilDificil = separa2Respostas(respostas,"&");
-        return facilDificil;
+        return separa2Respostas(respostas,"&");
     }
     private ArrayList buedaFacil(String[][] mixed){
 

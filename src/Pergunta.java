@@ -2,10 +2,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Pergunta implements Serializable {
-    protected int valorBase;
-    protected String pergunta;
+    private int valorBase;
+    private String pergunta;
 
-    protected int majoracao;
+    private int majoracao;
 
     public Pergunta( String pergunta, int majoracao) {
         setValorBase();
@@ -34,8 +34,7 @@ public class Pergunta implements Serializable {
         return pergunta;
     }
 
-
-
+    public int getMajoracao() { return majoracao;}
     //Metodos
 
     public boolean checkAnswer(String respostaSelecionada,int jogada){return false;}

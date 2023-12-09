@@ -3,8 +3,8 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Artes extends Pergunta {
-    protected ArrayList<String> respostas;
-    protected String respostaCerta;
+    private ArrayList<String> respostas;
+    private String respostaCerta;
 
 
     public Artes( String pergunta, ArrayList<String> respostas, String respostaCerta) {
@@ -143,6 +143,6 @@ public class Artes extends Pergunta {
 
     @Override
     public int contas(){
-        return super.valorBase*super.majoracao;
+        return super.getValorBase()*super.getMajoracao();
     }
 }

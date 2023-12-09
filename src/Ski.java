@@ -3,8 +3,8 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Ski extends Desporto{
-    protected ArrayList<String> respostas;
-    protected String respostaCerta;
+    private ArrayList<String> respostas;
+    private String respostaCerta;
 
 
     public Ski(String pergunta, ArrayList<String> respostas, String respostaCerta) {
@@ -70,17 +70,11 @@ public class Ski extends Desporto{
 
     @Override
     public boolean checkAnswer(String respostaSelecionada,int jogada){
-        if(getRespostas().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta())){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return getRespostas().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta());
     }
 
     @Override
     public int contas() {
-        int pontos=super.valorBase+super.majoracao*getMajoracaoD();
-        return pontos;
+        return super.getValorBase()+super.getMajoracao()*getMajoracaoD();
     }
 }

@@ -3,9 +3,9 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Futebol extends Desporto{
-    protected ArrayList<String> respostasFacil;
-    protected ArrayList<String> respostasDificil;
-    protected String[] respostaCerta;
+    private ArrayList<String> respostasFacil;
+    private ArrayList<String> respostasDificil;
+    private String[] respostaCerta;
 
     public Futebol(String pergunta,  ArrayList<String> respostasFacil, ArrayList<String> respostasDificil, String[] respostaCerta) {
         super(pergunta,1);
@@ -119,26 +119,16 @@ public class Futebol extends Desporto{
     @Override
     public boolean checkAnswer(String respostaSelecionada,int jogada){
         if (jogada < 3) {
-            if(getRespostasFacil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta()[0])){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return getRespostasFacil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta()[0]);
 
         } else {
-            if (getRespostasDificil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta()[1])) {
-                return true;
-            } else {
-                return false;
-            }
+            return getRespostasDificil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta()[1]);
         }
 
     }
 
     @Override
     public int contas(){
-        int pontos =super.valorBase+super.majoracao+getMajoracaoD();
-        return pontos;
+        return super.getValorBase()+super.getMajoracaoD()+getMajoracaoD();
     }
 }

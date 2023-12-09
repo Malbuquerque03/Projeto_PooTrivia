@@ -3,9 +3,9 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Ciencia extends Pergunta{
-    protected ArrayList<String> respostasFacil;
-    protected ArrayList<String> respostasDificil;
-    protected String respostaCerta;
+    private ArrayList<String> respostasFacil;
+    private ArrayList<String> respostasDificil;
+    private String respostaCerta;
 
 
     public Ciencia(String pergunta, ArrayList<String> respostasFacil, ArrayList<String> respostasDificil, String respostaCerta) {
@@ -116,26 +116,16 @@ public class Ciencia extends Pergunta{
     @Override
     public boolean checkAnswer(String respostaSelecionada,int jogada){
         if (jogada < 3) {
-            if(getRespostasFacil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta())){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return getRespostasFacil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta());
 
         } else {
-            if (getRespostasDificil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta())) {
-                return true;
-            } else {
-                return false;
-            }
+            return getRespostasDificil().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta());
         }
 
     }
 
     @Override
     public int contas() {
-        int pontos=super.valorBase+super.majoracao;
-        return pontos;
+        return super.getValorBase()+super.getMajoracao();
     }
 }

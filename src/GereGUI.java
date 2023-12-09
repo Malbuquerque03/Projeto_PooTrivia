@@ -275,7 +275,7 @@ public class GereGUI extends JFrame {
         JPanel resumoPanel = new JPanel(null);
         resumoPanel.setBackground(corFundo);
         //Cria um novo Jogador
-        Jogador j= new Jogador(nome,respostasErradas,respostasCertas, jogo.createData());
+        Jogador j= new Jogador(nome,respostasErradas,respostasCertas, jogo.createDate());
         //Label do nome
         JLabel nameLabel = new JLabel(j.getNome());
         nameLabel.setFont(new Font("Times New Roman", Font.BOLD, 50));
