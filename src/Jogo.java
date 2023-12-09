@@ -1,4 +1,6 @@
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -82,7 +84,7 @@ public class Jogo {
         System.out.println("\n+++++++++++++++++++++++++++++FIM DO JOGO+++++++++++++++++++++++++++++");
         System.out.print("-->Nome: ");
         String nome= sc.nextLine();
-        Jogador j= new Jogador(nome,respostasErradas,respostasCertas);
+        Jogador j= new Jogador(nome,respostasErradas,respostasCertas,createData());
         int pontos= pontuacao(j);
 
         System.out.println("-->Pontuação: "+ pontos);
@@ -272,6 +274,16 @@ public class Jogo {
         File filename = new File(j.getNomeFile());
         f.writeFicheiroObjetos(j,filename);
        // buscaFilesJogadores(j,jogadores);
+    }
+    public String createData(){
+        // Get the current date and time
+        LocalDateTime dataFeia = LocalDateTime.now();
+        // Define a formatter for the desired output format
+        DateTimeFormatter padrao = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        // Format the current date and time as a string
+        String data = dataFeia.format(padrao);
+        return data;
     }
 
 }

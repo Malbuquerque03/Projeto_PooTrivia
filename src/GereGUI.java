@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.Font;
 import java.awt.Color;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.border.EmptyBorder;
 
@@ -277,7 +279,7 @@ public class GereGUI extends JFrame {
         JPanel resumoPanel = new JPanel(null);
         resumoPanel.setBackground(corFundo);
         //Cria um novo Jogador
-        Jogador j= new Jogador(nome,respostasErradas,respostasCertas);
+        Jogador j= new Jogador(nome,respostasErradas,respostasCertas,createData());
         //Label do nome
         JLabel nameLabel = new JLabel(j.getNome());
         nameLabel.setFont(new Font("Times New Roman", Font.BOLD, 50));
@@ -388,6 +390,16 @@ public class GereGUI extends JFrame {
 
     }
 
+    private String createData(){
+        // Get the current date and time
+        LocalDateTime dataFeia = LocalDateTime.now();
+        // Define a formatter for the desired output format
+        DateTimeFormatter padrao = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        // Format the current date and time as a string
+        String data = dataFeia.format(padrao);
+        return data;
+    }
 
 
 

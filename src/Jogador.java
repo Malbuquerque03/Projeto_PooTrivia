@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class Jogador implements Serializable {
 
-    String data;
+    protected String data;
     protected String nome;
 
     protected ArrayList<Pergunta> erradas;
     protected ArrayList<Pergunta> certas;
     protected String nomeFile;
 
-    public Jogador( String nome,ArrayList<Pergunta> erradas,ArrayList<Pergunta> certas ) {
-        setData();
+    public Jogador( String nome,ArrayList<Pergunta> erradas,ArrayList<Pergunta> certas , String data) {
+        this.data = data;
         this.nome = nome;
         this.erradas=erradas;
         this.certas=certas;
@@ -20,17 +20,12 @@ public class Jogador implements Serializable {
 
     }
 
+
     // setters
-    public void setData() {
-
-        // Get the current date and time
-        LocalDateTime dataFeia = LocalDateTime.now();
-        // Define a formatter for the desired output format
-        DateTimeFormatter padrao = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-        // Format the current date and time as a string
-        data = dataFeia.format(padrao);
+    public void setData(String data) {
+        this.data = data;
     }
+
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -87,6 +82,8 @@ public class Jogador implements Serializable {
                 ", nomeFile='" + nomeFile + '\'' +
                 '}';
     }
+
+
 }
 
 

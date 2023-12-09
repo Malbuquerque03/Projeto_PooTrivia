@@ -56,7 +56,7 @@ public class Artes extends Pergunta {
 
             Collections.shuffle(resp);
 
-            resp = new ArrayList<>(resp.subList(0, resp.size() / 2));
+            resp = new ArrayList<>(resp.subList(0, 2));
 
             resp.add(getRespostas().get(0));
             Collections.shuffle(resp);
