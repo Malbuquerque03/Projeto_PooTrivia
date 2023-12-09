@@ -100,7 +100,7 @@ public class Jogo {
         System.out.println("-->Data: "+ j.data);
         File filename = new File(j.getNomeFile());
         saveData(j);
-        listFilesExample(j,jogadores);
+        buscaFilesJogadores(j,jogadores);
         if(!jogadores.isEmpty()){
             for(Jogador jog : jogadores){
                 System.out.println("------------JOGADOR---------");
@@ -148,7 +148,7 @@ public class Jogo {
 
 
 
-    private void listFilesExample(Jogador j,ArrayList<Jogador> jogadores) {
+    private void buscaFilesJogadores(Jogador j,ArrayList<Jogador> jogadores) {
         jogadores.clear();
 
         // Specify the directory path
@@ -271,7 +271,7 @@ public class Jogo {
     public void saveData(Jogador j){
         File filename = new File(j.getNomeFile());
         f.writeFicheiroObjetos(j,filename);
-       // listFilesExample(j,jogadores);
+       // buscaFilesJogadores(j,jogadores);
     }
 
 }
