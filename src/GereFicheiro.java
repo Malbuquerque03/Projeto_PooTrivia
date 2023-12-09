@@ -104,7 +104,6 @@ public class GereFicheiro {
     public void readFicheiroObjetos(Jogador j, File fo, ArrayList<Jogador> jogadores) {
 
         try {
-
             FileInputStream fis = new FileInputStream(fo);
             ObjectInputStream ois = new ObjectInputStream(fis);
             j = (Jogador) ois.readObject();

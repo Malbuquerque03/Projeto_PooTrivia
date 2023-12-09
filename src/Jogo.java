@@ -149,6 +149,7 @@ public class Jogo {
 
 
     private void listFilesExample(Jogador j,ArrayList<Jogador> jogadores) {
+        jogadores.clear();
 
         // Specify the directory path
         String directoryPath = "C:\\Users\\Utilizador\\IdeaProjects\\Projeto_PooTrivia";
