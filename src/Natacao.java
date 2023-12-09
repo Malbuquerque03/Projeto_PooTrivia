@@ -26,7 +26,7 @@ public class Natacao extends Desporto{
 
     //Getters
 
-    public ArrayList getRespostas() {
+    public ArrayList<String> getRespostas() {
         return respostas;
     }
 
@@ -38,7 +38,7 @@ public class Natacao extends Desporto{
 
 
     @Override
-    public int questionario(int jogada){
+    public boolean questionario(int jogada){
         Collections.shuffle(getRespostas());
         Scanner sc = new Scanner(System.in);
         for(int i=0;i< getRespostas().size();i++){
@@ -54,11 +54,11 @@ public class Natacao extends Desporto{
         else{
             if(respostas.get(x).equals(respostaCerta)){
                 System.out.println("ACERTOU------ " +contas()+ " pontos");
-                return 1;
+                return true;
             }
             else{
                 System.out.println("ERROU------ 0 pontos");
-                return 0;
+                return false;
             }
         }
 
@@ -72,11 +72,11 @@ public class Natacao extends Desporto{
     @Override
     public boolean checkAnswer(String respostaSelecionada,int jogada){
         if(getRespostas().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta())){
-        return true;
+            return true;
         }
-    else{
-        return false;
-         }
+        else{
+            return false;
+        }
     }
 
 

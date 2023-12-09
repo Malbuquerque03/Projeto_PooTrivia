@@ -46,7 +46,7 @@ public class Futebol extends Desporto{
     //Metodos
 
     @Override
-    public int questionario(int jogada){
+    public boolean questionario(int jogada){
         Scanner sc = new Scanner(System.in);
         if (jogada<3){
             Collections.shuffle(respostasFacil);
@@ -65,11 +65,11 @@ public class Futebol extends Desporto{
             else{
                 if(getRespostasFacil().get(x).equals(respostaCerta[0])){
                     System.out.println("ACERTOU------ " +contas()+ " pontos");
-                    return 1;
+                    return true;
                 }
                 else{
                     System.out.println("ERROU------ 0 pontos");
-                    return 0;
+                    return false;
                 }
             }
         }
@@ -91,11 +91,11 @@ public class Futebol extends Desporto{
                 if(getRespostasDificil().get(x).equals(getRespostaCerta()[1])){
 
                     System.out.println("ACERTOU------ " +contas()+ " pontos");
-                    return 1;
+                    return true;
                 }
                 else{
                     System.out.println("ERROU------ 0 pontos");
-                    return 0;
+                    return false;
                 }
             }
         }
@@ -109,7 +109,7 @@ public class Futebol extends Desporto{
             Collections.shuffle(getRespostasFacil());
             return getRespostasFacil();
         }
-       else{
+        else{
             Collections.shuffle(getRespostasDificil());
             return getRespostasDificil();
         }

@@ -7,7 +7,6 @@ public class Pergunta implements Serializable {
 
     protected int majoracao;
 
-
     public Pergunta( String pergunta, int majoracao) {
         setValorBase();
         this.pergunta = pergunta;
@@ -41,9 +40,9 @@ public class Pergunta implements Serializable {
 
     public boolean checkAnswer(String respostaSelecionada,int jogada){return false;}
 
-    public int questionario(int jogada){ return 2; }
+    public boolean questionario(int jogada){ return false; }
 
-    public ArrayList getAnswers(int jogada){return null;}
+    public ArrayList<String> getAnswers(int jogada){return null;}
 
     public int contas(){ return 2; }
 }

@@ -46,7 +46,7 @@ public class Ciencia extends Pergunta{
     //Metodos
 
     @Override
-    public int questionario(int jogada){
+    public boolean questionario(int jogada){
         Collections.shuffle(getRespostasFacil());
         Collections.shuffle(getRespostasDificil());
         Scanner sc = new Scanner(System.in);
@@ -65,11 +65,11 @@ public class Ciencia extends Pergunta{
             else{
                 if(getRespostasFacil().get(x).equals(getRespostaCerta())){
                     System.out.println("ACERTOU------ " +contas()+ " pontos");
-                    return 1;
+                    return true;
                 }
                 else{
                     System.out.println("ERROU------ 0 pontos");
-                    return 0;
+                    return false;
                 }
             }
         }
@@ -89,18 +89,18 @@ public class Ciencia extends Pergunta{
             else {
                 if(getRespostasDificil().get(x).equals(getRespostaCerta())){
                     System.out.println("ACERTOU------ " +contas()+ " pontos");
-                    return 1;
+                    return true;
                 }
                 else{
                     System.out.println("ERROU------ 0 pontos");
-                    return 0;
+                    return false;
                 }
             }
         }
 
     }
 
-    
+
     @Override
     public ArrayList<String> getAnswers(int jogada){
         if(jogada<3){

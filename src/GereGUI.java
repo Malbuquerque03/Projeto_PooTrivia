@@ -2,15 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.Font;
 import java.awt.Color;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.border.EmptyBorder;
 
 
 public class GereGUI extends JFrame {
     Color corBotao= new Color(229,179,242);
-    Color corLetrasBotao= new Color	(86,86,86);
     Color corPerguntas= new Color(242,162,192);
     Color corFundo= new Color(64,61,62);
     private CardLayout cardLayout;
@@ -74,10 +71,11 @@ public class GereGUI extends JFrame {
         //Define a cor do texto
         startButton.setForeground(corPerguntas);
 
+        int index = jogo.verificacao(perguntas,respostasCertas,respostasErradas);
+        System.out.println("Index: "+index);
         startButton.addActionListener(e -> {
             jogada=1;
-            int index = jogo.verificacao(perguntas);
-            cardPanel.add(createQuestionPanel(index, perguntas, jogo.fazResposta(perguntas, jogada, index),respostasCertas,respostasErradas,jogadores), "Question" + (jogada));
+            cardPanel.add(createQuestionPanel(index,perguntas, jogo.fazResposta(perguntas, jogada, index), respostasCertas, respostasErradas ,jogadores), "Question" + (jogada));
             cardLayout.next(cardPanel);
 
         });
@@ -86,7 +84,7 @@ public class GereGUI extends JFrame {
         return buttonPanel;
     }
 
-    private JPanel createQuestionPanel(int index,ArrayList<Pergunta> perguntas,ArrayList respostas,ArrayList<Pergunta> respostasCertas,ArrayList<Pergunta> respostasErradas ,ArrayList<Jogador> jogadores) {
+    private JPanel createQuestionPanel(int index,ArrayList<Pergunta> perguntas,ArrayList<String> respostas,ArrayList<Pergunta> respostasCertas,ArrayList<Pergunta> respostasErradas ,ArrayList<Jogador> jogadores) {
 
         //Define o painel da pergunta
         JPanel questionPanel = new JPanel(new BorderLayout());
@@ -96,13 +94,11 @@ public class GereGUI extends JFrame {
         questionLabel.setForeground(corPerguntas);
         questionPanel.setBackground(corFundo);
 
-        questionPanel.add(questionLabel, BorderLayout.NORTH);
-
         //Define painel de opções
         JPanel optionsPanel = new JPanel(new GridLayout(respostas.size(), 1));
 
-        for (Object option : respostas) {
-            JButton optionButton = new JButton(option.toString());
+        for (String option : respostas) {
+            JButton optionButton = new JButton(option);
             optionButton.addActionListener(e -> {
                 cardPanel.removeAll();
                 boolean correta = verificarResposta(optionButton, perguntas, jogada,index,respostasCertas,respostasErradas);
@@ -121,14 +117,13 @@ public class GereGUI extends JFrame {
             });
             optionsPanel.add(optionButton);
         }
-
+        questionPanel.add(questionLabel, BorderLayout.NORTH);
         questionPanel.add(optionsPanel, BorderLayout.CENTER);
 
         return questionPanel;
     }
 
     private boolean verificarResposta(JButton button, ArrayList<Pergunta> perguntas, int jogada, int index,ArrayList<Pergunta> respostasCertas,ArrayList<Pergunta> respostasErradas) {
-        //aux=0;
         String respostaSelecionada = button.getText();
         return jogo.checksAnswer(perguntas, jogada, index, respostaSelecionada,respostasCertas,respostasErradas);
 
@@ -200,9 +195,11 @@ public class GereGUI extends JFrame {
 
         continueButton.addActionListener(e -> {
             jogada++;
+
             if (jogada < 6) {
                 cardPanel.removeAll();
-                int index = jogo.verificacao(perguntas);
+                int index = jogo.verificacao(perguntas,respostasCertas,respostasErradas);
+                System.out.println("Index: "+index);
                 cardPanel.add(createQuestionPanel(index,perguntas, jogo.fazResposta(perguntas, jogada, index), respostasCertas, respostasErradas ,jogadores), "Question" + (jogada));
                 cardLayout.next(cardPanel);
             } else{
@@ -258,7 +255,6 @@ public class GereGUI extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(nameInputPanel, "Nome inserido: " + name, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 cardPanel.removeAll();
-                //cardPanel.add(getWelcomePanel( perguntas, respostasCertas,respostasErradas,), "Welcome");
                 cardPanel.add(getResumePanel( perguntas, respostasCertas,respostasErradas,name,jogadores), "Resume Panel");
                 cardLayout.next(cardPanel);
             }
@@ -279,7 +275,7 @@ public class GereGUI extends JFrame {
         JPanel resumoPanel = new JPanel(null);
         resumoPanel.setBackground(corFundo);
         //Cria um novo Jogador
-        Jogador j= new Jogador(nome,respostasErradas,respostasCertas,createData());
+        Jogador j= new Jogador(nome,respostasErradas,respostasCertas, jogo.createData());
         //Label do nome
         JLabel nameLabel = new JLabel(j.getNome());
         nameLabel.setFont(new Font("Times New Roman", Font.BOLD, 50));
@@ -326,16 +322,12 @@ public class GereGUI extends JFrame {
         JButton continueButton = new JButton("Continuar");
         continueButton.setBounds(375, 700, 300, 60);
 
-        // Define um tamanho específico para o botão
-        //Dimension buttonSize = new Dimension(300, 60);
-        //continueButton.setPreferredSize(buttonSize);
-
         // Define o tamanho da fonte do texto no botão
         Font buttonFont = new Font("Times New Roman", Font.BOLD, 23);
         continueButton.setFont(buttonFont);
         //Define a cor do texto
         continueButton.setForeground(corBotao);
-        jogo.saveData(j);
+        jogo.saveData(j,jogadores);
 
         continueButton.addActionListener(e -> {
             cardPanel.removeAll();
@@ -389,18 +381,5 @@ public class GereGUI extends JFrame {
         return top3Panel;
 
     }
-
-    private String createData(){
-        // Get the current date and time
-        LocalDateTime dataFeia = LocalDateTime.now();
-        // Define a formatter for the desired output format
-        DateTimeFormatter padrao = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-        // Format the current date and time as a string
-        String data = dataFeia.format(padrao);
-        return data;
-    }
-
-
 
 }

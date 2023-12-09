@@ -35,7 +35,7 @@ public class Ski extends Desporto{
     //Metodos
 
     @Override
-    public int questionario(int jogada){
+    public boolean questionario(int jogada){
         Collections.shuffle(getRespostas());
         Scanner sc = new Scanner(System.in);
         for(int i=0;i< getRespostas().size();i++){
@@ -52,11 +52,11 @@ public class Ski extends Desporto{
         else{
             if(getRespostas().get(x).equals(getRespostaCerta())){
                 System.out.println("ACERTOU------ " +contas()+ " pontos");
-                return 1;
+                return true;
             }
             else{
                 System.out.println("ERROU------ 0 pontos");
-                return 0;
+                return false;
             }
         }
 

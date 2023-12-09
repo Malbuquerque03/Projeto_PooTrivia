@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.io.File;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class PooTrivia {
@@ -10,17 +8,7 @@ public class PooTrivia {
     }
     public PooTrivia(){
 
-        ArrayList<Jogador> jogadores= new ArrayList<>();
-        ArrayList<Pergunta> perguntas = new ArrayList<>();
-        ArrayList<Pergunta> respostasCertas =new ArrayList<>() ;
-        ArrayList<Pergunta> respostasErradas =new ArrayList<>() ;
-        GereFicheiro fich = new GereFicheiro();
-        fich.readTextFile(new File("perguntas_poo.csv"), perguntas);
-        Jogo jogo=new Jogo();
-        jogo.menu(perguntas,jogadores);
-
-
-        GereGUI frame = new GereGUI(perguntas,respostasCertas,respostasErradas,jogadores);
+        GereGUI frame = getGereGUI();
 
         frame.setTitle("POO Trivia");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,8 +20,20 @@ public class PooTrivia {
 
         frame.setVisible(true);
 
+    }
+
+    private static GereGUI getGereGUI() {
+        ArrayList<Jogador> jogadores= new ArrayList<>();
+        ArrayList<Pergunta> perguntas = new ArrayList<>();
+        ArrayList<Pergunta> respostasCertas =new ArrayList<>() ;
+        ArrayList<Pergunta> respostasErradas =new ArrayList<>() ;
+        GereFicheiro fich = new GereFicheiro();
+        fich.readTextFile(new File("perguntas_poo.csv"), perguntas);
+        //Jogo jogo=new Jogo();
+        //jogo.menu(perguntas,jogadores);
 
 
+        return new GereGUI(perguntas,respostasCertas,respostasErradas,jogadores);
     }
 
 }

@@ -44,12 +44,12 @@ public class Artes extends Pergunta {
 
 
     @Override
-    public int questionario(int jogada){
+    public boolean questionario(int jogada){
 
         Scanner sc = new Scanner(System.in);
 
         if(jogada<3){
-            ArrayList<String> resp= new ArrayList();
+            ArrayList<String> resp= new ArrayList<>();
             for (String resposta : respostas.subList(1, respostas.size())) {
                 resp.add(resposta);
             }
@@ -61,7 +61,7 @@ public class Artes extends Pergunta {
             resp.add(getRespostas().get(0));
             Collections.shuffle(resp);
 
-            for(Object r: resp){
+            for(String r: resp){
                 System.out.println(resp.indexOf(r)+"-->"+r);
                 System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             }
@@ -75,11 +75,11 @@ public class Artes extends Pergunta {
             else{
                 if(resp.get(x).equals(respostaCerta)){
                     System.out.println("ACERTOU------ " +contas()+ " pontos");
-                    return 1;
+                    return true;
                 }
                 else{
                     System.out.println("ERROU------ 0 pontos");
-                    return 0;
+                    return false;
                 }
             }
 
@@ -100,11 +100,11 @@ public class Artes extends Pergunta {
             else{
                 if(getRespostas().get(x).equals(getRespostaCerta())){
                     System.out.println("ACERTOU------ " +contas()+ " pontos");
-                    return 1;
+                    return true;
                 }
                 else{
                     System.out.println("ERROU------ 0 pontos");
-                    return 0;
+                    return false;
                 }
             }
 
@@ -113,14 +113,14 @@ public class Artes extends Pergunta {
     }
 
     @Override
-    public ArrayList getAnswers(int jogada){
+    public ArrayList<String> getAnswers(int jogada){
         if(jogada<3){
-            ArrayList<String> resp= new ArrayList();
+            ArrayList<String> resp= new ArrayList<>();
             for (String resposta : getRespostas().subList(1, getRespostas().size())) {
                 resp.add(resposta);
             }
             Collections.shuffle(resp);
-            resp = new ArrayList<>(resp.subList(0, 2));
+            resp = new ArrayList<>(resp.subList(0,2));
             resp.add(getRespostas().get(0));
             Collections.shuffle(resp);
             return resp;
@@ -136,19 +136,13 @@ public class Artes extends Pergunta {
 
     @Override
     public boolean checkAnswer(String respostaSelecionada,int jogada){
-        if(getRespostas().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta())){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return getRespostas().contains(respostaSelecionada) && respostaSelecionada.equals(getRespostaCerta());
     }
 
 
 
     @Override
     public int contas(){
-        int pontos=super.valorBase*super.majoracao;
-        return pontos;
+        return super.valorBase*super.majoracao;
     }
 }

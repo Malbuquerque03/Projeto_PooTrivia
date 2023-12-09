@@ -24,8 +24,8 @@ public class Desporto extends Pergunta {
     public boolean checkAnswer(String respostaSelecionada,int jogada){return false;}
 
     @Override
-    public int questionario(int jogada){ return 3; }
+    public boolean questionario(int jogada){ return false; }
 
     @Override
-    public ArrayList getAnswers(int jogada){return null;}
+    public ArrayList<String> getAnswers(int jogada){return null;}
 }
