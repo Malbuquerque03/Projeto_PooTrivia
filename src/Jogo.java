@@ -145,7 +145,7 @@ public class Jogo {
         }
     }
 
-    private void buscaFilesJogadores(Jogador j,ArrayList<Jogador> jogadores) {
+    private void buscaFilesJogadores(ArrayList<Jogador> jogadores) {
         jogadores.clear();
 
         // Specify the directory path
@@ -268,7 +268,7 @@ public class Jogo {
     public void saveData(Jogador j,ArrayList<Jogador> jogadores){
         File filename = new File(j.getNomeFile());
         f.writeFicheiroObjetos(j,filename);
-        buscaFilesJogadores(j,jogadores);
+        buscaFilesJogadores(jogadores);
     }
     public String createDate(){
         // Get the current date and time
